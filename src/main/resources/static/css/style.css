@@ -19,3 +19,31 @@ body {
     background-color: white;
 }
 
+.login-title {
+    font-size : 20px;
+    text-align : center;
+}
+
+.form-container {
+    width : 520px;
+    margin : 20px auto;
+    padding : 30px 20px;
+    border : 1px solid black;
+    border-radius : 5px;
+}
+
+.form-group .form-control {
+    width : 490px;
+    margin : auto;
+    padding : 2px 10px;
+    font-size : 16px;
+}
+
+.login-submit {
+    margin : 0 10px;
+}
+
+
+
+
+
