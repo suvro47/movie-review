@@ -4,11 +4,16 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 <body>
-     <h1 class="index">
-         this is index page ........
-     </h1>
+
+    <div class="container">
+        <div th:insert="navbar :: navbar_head">...</div>
+        <div th:insert="navbar :: navbar_content">...</div>
+
+    </div>
+
+
+
 
 </body>

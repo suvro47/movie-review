@@ -5,12 +5,17 @@
   box-sizing: inherit;
 }
 
-html {
-	
+body {
+	background-color : gray;
 }
 
-body {
-	background-color : black;
-	font-color : white;
+.container {
+    width : 80%;
+    margin : auto;
+}
+
+.navbar {
+    margin-top : 20px;
+    background-color: white;
 }
 
