@@ -1,7 +1,9 @@
 package com.dsi.spring.controller;
 
 import com.dsi.spring.dao.UserDao;
+import com.dsi.spring.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +33,21 @@ public class AuthController {
 
     @RequestMapping("/logout-success")
     public String logoutSuccess() {
+        return "login";
+    }
+
+    @GetMapping("/signup")
+    public String signupPage(Model model) {
+        User user = new User();
+        model.addAttribute("user", user);
+        return "signup";
+    }
+
+    @RequestMapping("/registration-submit")
+    public String registration_submit(User user) {
+        user.setEnabled(true);
+        user.setPassword(new BCryptPasswordEncoder().encode("1234"));
+        userDao.save(user);
         return "login";
     }
 

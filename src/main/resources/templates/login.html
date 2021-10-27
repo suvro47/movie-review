@@ -11,7 +11,7 @@
 	<div class="container">
 
 		<form class="form-container text-center" th:action="@{/login}" method='POST'>
-			<p class="login-title"> Please Login Here </p>
+			<p class="form-title"> Please Login Here </p>
 			<p th:if="${loginError}" class="error"> Login Failed  </p>
 			<div class="form-group">
 				<label for="input_email">Username</label>
