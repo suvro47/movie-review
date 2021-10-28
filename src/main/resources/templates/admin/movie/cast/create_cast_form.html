@@ -3,10 +3,14 @@
   <head th:replace="layouts :: head"> </head>
   <body>
     <div class="container">
-      <nav th:replace="layouts :: navbar"></nav>
+      <nav th:replace="layouts :: admin_navbar"></nav>
       <div class="container">
         <h1 align="center">Create A New Cast</h1>
-        <form th:object="${castForm}" action="/casts/create" method="post">
+        <form
+          th:object="${castForm}"
+          action="/admin/casts/create"
+          method="post"
+        >
           <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label"
               >Cast Name</label

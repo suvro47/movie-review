@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/movies")
+@RequestMapping("/admin/movies")
 public class MovieController {
 
     @Autowired
@@ -28,19 +28,20 @@ public class MovieController {
     public String getMovies(Model model) {
         List<Movie> movies = movieDao.findAll();
         model.addAttribute("movies", movies);
-        return "movie/movies";
+        return "admin/movie/movies";
     }
 
     @GetMapping("/add")
     public String addMovieForm(Model model) {
         List<Cast> casts = castDao.findAll();
         model.addAttribute("casts", casts);
-        return "movie/add_movie_form";
+        model.addAttribute("movieForm", new Movie());
+        return "admin/movie/add_movie_form";
     }
 
     @PostMapping("/add")
     public String addMovie(Movie movie) {
         movieDao.save(movie);
-        return "redirect:/movies/";
+        return "redirect:/admin/movies/";
     }
 }

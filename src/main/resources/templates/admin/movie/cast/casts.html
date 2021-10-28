@@ -3,13 +3,11 @@
   <head th:replace="layouts :: head"> </head>
   <body>
     <div class="container">
-      <nav th:replace="layouts :: navbar"></nav>
+      <nav th:replace="layouts :: admin_navbar"></nav>
       <div class="container">
-        <div>
-          <a href="/casts/create">Create Cast</a>
-          <br />
-          <a href="/movies/add">Add Movie</a>
-        </div>
+        <div style="height: 20px"></div>
+        <p align="center"><a href="/admin/casts/create">Add Cast</a></p>
+      </div>
         <div>
           <table class="table">
             <thead>

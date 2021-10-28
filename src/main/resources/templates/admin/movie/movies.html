@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: head"> </head>
+  <body>
+    <div class="container">
+      <nav th:replace="layouts :: admin_navbar"></nav>
+      <div class="container">
+        <div style="height: 20px"></div>
+        <p align="center"><a href="/admin/movies/add">Add Movie</a></p>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Poster</th>
+                <th scope="col">Name</th>
+                <th scope="col">Genre</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="movie : ${movies}">
+                <td th:text="${movie.id}"></td>
+                <td><img th:src="@{movie.poster}" /></td>
+                <td th:text="${movie.name}"></td>
+                <td th:text="${movie.genre}"></td>
+                <td th:text="${movie.releaseDate}"></td>
+                <td>
+                  <button class="btn btn-danger">Delete</button>
+                  <button class="btn btn-warning">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
