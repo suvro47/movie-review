@@ -13,10 +13,10 @@ It's a web based **Movie Review Application** where users will be able to write 
     - [Shifat](http://www.github.com/jspw)
     - [Rashid](http://www.github.com/rashid54)
 
-- #03 Reviews
+- #03 Reviews(Creating Review Model, Review Repository, Review Controller, Review detail page)
 
   - Contributors :
-    - Sohel
+    - [NavidMahbub](https://github.com/NavidMahbub)
 
 - #04 Comments on Review
   - Contributors :
@@ -41,7 +41,6 @@ spring.datasource.url= jdbc:postgresql://localhost:5432/dsi
 spring.datasource.username= postgres
 spring.datasource.password= root
 
-spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation= true
 spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
 ```
 
@@ -49,22 +48,17 @@ spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
 ```
 spring.jpa.hibernate.ddl-auto= update
 ```
-
-```
 ## Run Spring Boot application
 ```
 mvn spring-boot:run
 ```
-##Follow the below steps
+## Follow the below steps
 ```
 1. First install postgresql 
 2. Postgesql  default usename is : postgres
 3. Postgresql database password should be : root
-4. Need to create a database named "dsi" 
+4. Need to create a database named `dsi`
 5. Change database postgres to dsi
-6. Run the code, that will create all tables in testdb database.
-8. Then signin as an admin using username "admin" and password "admin"
-9. Signin as an user using username "user" and password "user"
-10. Signin as an editor using username "editor" and password "editor"
-11. Signin as an creator using username "creator" and password "creator"
+6. Run the code, that will create all tables in `dsi` database.
+8. Then signin as an admin using username `admin` and password `admin` similarly for `user`, `editor` and `creator`
 ```
