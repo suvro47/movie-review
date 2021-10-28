@@ -37,7 +37,7 @@ It's a web based **Movie Review Application** where users will be able to write 
 Open `src/main/resources/application.properties`
 - For PostgreSQL:
 ```
-spring.datasource.url= jdbc:postgresql://localhost:5432/testdb
+spring.datasource.url= jdbc:postgresql://localhost:5432/dsi
 spring.datasource.username= postgres
 spring.datasource.password= root
 
@@ -49,10 +49,6 @@ spring.jpa.properties.hibernate.dialect= org.hibernate.dialect.PostgreSQLDialect
 ```
 spring.jpa.hibernate.ddl-auto= update
 ```
-# App Properties
-```
-nsl.erp.jwtSecret= SecretKey
-nsl.erp.jwtExpirationMs = 86400000
 
 ```
 ## Run Spring Boot application
