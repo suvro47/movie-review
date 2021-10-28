@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -52,9 +53,6 @@ public class AuthController {
 
     @RequestMapping("/signup-submit")
     public String signup_submit(User user) {
-
-        System.out.println("I am here");
-
         // default role set ad admin
         Role role = roleDao.findById(4).orElse(new Role()); // admin role fetched
         Set<Role> roles = new HashSet<Role>();
@@ -65,10 +63,14 @@ public class AuthController {
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
         User savedUser = userDao.save(user);
 
-
-        System.out.println(savedUser);
-
         return "login";
+    }
+
+    @RequestMapping("/all_user")
+    public String home(Model model) {
+        List<User> users = userDao.findAll();
+        model.addAttribute("allUser", users);
+        return "all_user";
     }
 
 

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <title>All User</title>
+</head>
+<body>
+
+    <div th:insert="navbar :: navbar_head">...</div>
+    <div th:insert="navbar :: navbar_content">...</div>
+
+    <div class="container">
+        <div align="center">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope=""col>#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Active</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${allUser}">
+                        <td th:text=" ${user.id}"> User Id </td>
+                        <td th:text = "${user.username}"> Username </td>
+                        <td th:text = "${user.firstName}"> First Name </td>
+                        <td th:text = "${user.lastName}"> Last Name </td>
+                        <td th:text = "${user.email}"> Email </td>
+                        <td th:text = "${user.enabled}"> Is Active </td>
+                        <td>
+                            <a th:href="@{'/edit/' + ${user.id}}" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Edit</a>
+                            &nbsp; &nbsp;
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${user.id}}" >Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+
