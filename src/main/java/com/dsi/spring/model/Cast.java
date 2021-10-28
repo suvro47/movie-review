@@ -7,9 +7,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-@Entity
-@Table(name = "cast")
+@Entity(name = "actor")
+@Table(name = "actor", uniqueConstraints = @UniqueConstraint(name = "cast_name_unique", columnNames = "name"))
 
 public class Cast {
 
@@ -19,10 +20,10 @@ public class Cast {
     @Column(name = "id", updatable = false)
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, columnDefinition = "VARCHAR(255)")
     private String name;
 
-    @Column(name = "imageUrl", nullable = true)
+    @Column(name = "imageUrl", nullable = true, columnDefinition = "TEXT")
     private String imageUrl;
 
     public Cast() {

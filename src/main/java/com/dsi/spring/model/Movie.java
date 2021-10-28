@@ -1,7 +1,6 @@
 package com.dsi.spring.model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,12 +29,8 @@ public class Movie {
     private Date releaseDate;
 
     // only for users to see
-    @Column(name = "rating", nullable = true, columnDefinition = "Decimal(10,2")
+    @Column(name = "rating", nullable = true, columnDefinition = "Decimal(10,2)")
     private Double rating;
-
-    // only for users to see
-    @Column(name = "reviews", nullable = true, columnDefinition = "TEXT")
-    private int reviews;
 
     @Column(name = "genre", nullable = false, columnDefinition = "TEXT")
     private String genre;
@@ -46,11 +41,10 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String name, Date releaseDate, Double rating, int reviews, String genre, String poster) {
+    public Movie(String name, Date releaseDate, Double rating, String genre, String poster) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.rating = rating;
-        this.reviews = reviews;
         this.genre = genre;
         this.poster = poster;
     }
@@ -71,28 +65,12 @@ public class Movie {
         this.name = name;
     }
 
-    public Date getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(Date releaseDate) {
-        this.releaseDate = releaseDate;
-    }
-
     public Double getRating() {
         return rating;
     }
 
     public void setRating(Double rating) {
         this.rating = rating;
-    }
-
-    public int getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(int reviews) {
-        this.reviews = reviews;
     }
 
     public String getGenre() {
@@ -109,12 +87,6 @@ public class Movie {
 
     public void setPoster(String poster) {
         this.poster = poster;
-    }
-
-    @Override
-    public String toString() {
-        return "Movie [genre=" + genre + ", id=" + id + ", name=" + name + ", poster=" + poster + ", rating=" + rating
-                + ", releaseDate=" + releaseDate + ", reviews=" + reviews + "]";
     }
 
     // List<Cast> casts;
