@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: head"> </head>
+  <body>
+    <div class="container">
+      <nav th:replace="layouts :: navbar"></nav>
+      <div class="container">
+        <div>
+          <a href="/casts/create">Create Cast</a>
+          <br />
+          <a href="/movies/add">Add Movie</a>
+        </div>
+        <div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="cast : ${casts}">
+                <td th:text="${cast.id}"></td>
+                <td th:text="${cast.name}"></td>
+                <td th:text="${cast.imageUrl}"></td>
+                <td>
+                  <button class="btn btn-danger">Delete</button>
+                  <button class="btn btn-warning">Edit</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
