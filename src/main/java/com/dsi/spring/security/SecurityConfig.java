@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/all_user").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
                 .antMatchers("/new/**").hasAnyAuthority("CREATOR", "ADMIN")
                 .antMatchers("/update/**").hasAnyAuthority("EDITOR", "ADMIN")
-                .antMatchers("/delete/**").hasAnyAuthority("Admin")
+                .antMatchers("/delete/**").hasAnyAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -21,7 +21,7 @@
                 <li class="nav-item"><a class="nav-link active" href="#">Task 2</a></li>
                 <li class="nav-item" > <a class="nav-link active" href="#">Task 3</a> </li>
                 <li class="nav-item" > <a class="nav-link active" href="#">Task 4</a> </li>
-                <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" >
+                <li class="nav-item" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR', 'CREATOR', 'USER')" >
                     <a class="nav-link active" href="/all_user">Users</a>
                 </li>
             </ul>
@@ -32,7 +32,7 @@
             </ul>
 
             <ul sec:authorize="isAuthenticated()" class="nav navbar-nav navbar-right" style = "margin-right:4px;">
-                <li> <a href="/profile"> Welcome ! <span sec:authentication="name">...</span> </a></li>
+                <li> <a href="/user_profile"> Welcome ! <span sec:authentication="name">...</span> </a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
         </nav>

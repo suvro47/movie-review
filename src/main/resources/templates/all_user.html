@@ -20,21 +20,29 @@
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
                     <th scope="col">Active</th>
-                    <th scope="col">Actions</th>
+                    <th scope="col">Roles</th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" scope="col" >Actions</th>
                 </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="user : ${allUser}">
-                        <td th:text=" ${user.id}"> User Id </td>
+                    <tr th:each="user, stat : ${allUser}">
+                        <td th:text="${stat.index + 1}">1</td>
                         <td th:text = "${user.username}"> Username </td>
                         <td th:text = "${user.firstName}"> First Name </td>
                         <td th:text = "${user.lastName}"> Last Name </td>
                         <td th:text = "${user.email}"> Email </td>
                         <td th:text = "${user.enabled}"> Is Active </td>
                         <td>
-                            <a th:href="@{'/edit/' + ${user.id}}" sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">Edit</a>
+                            <table>
+                                <tr th:each="role : ${user.roles}">
+                                    <td th:text="${#strings.toLowerCase(role.name)}"> </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/edit/user/' + ${user.id}}" >Edit</a>
                             &nbsp; &nbsp;
-                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/' + ${user.id}}" >Delete</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/user/' + ${user.id}}">Delete</a>
                         </td>
                     </tr>
                 </tbody>
