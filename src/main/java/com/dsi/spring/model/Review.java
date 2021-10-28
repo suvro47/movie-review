@@ -16,6 +16,26 @@ public class Review {
         @ElementCollection
         private List<String> comments;
 
+        @OneToOne
+        private User user;
+
+
+        public Long getReviewId() {
+                return reviewId;
+        }
+
+        public void setReviewId(Long reviewId) {
+                this.reviewId = reviewId;
+        }
+
+        public User getUser() {
+                return user;
+        }
+
+        public void setUser(User user) {
+                this.user = user;
+        }
+
         public String getContent() {
                 return content;
         }
