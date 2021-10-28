@@ -12,11 +12,6 @@ public class ReviewController {
         @Autowired
         private ReviewDao reviewDao;
 
-        @RequestMapping("/new/logged")
-        public String loggedUser(Authentication authentication){
-                return "Name : " +authentication.getName() ;
-        }
-
         @RequestMapping("/new/review")
         public String addNewReview(Review review){
                 reviewDao.save(review);

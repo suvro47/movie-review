@@ -11,7 +11,7 @@ public class Review {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long reviewId;
         private String content;
-        private double movieRating;
+        private Integer movieRating;
         private Integer likes;
         @ElementCollection
         private List<String> comments;
@@ -44,11 +44,11 @@ public class Review {
                 this.content = content;
         }
 
-        public double getMovieRating() {
+        public Integer getMovieRating() {
                 return movieRating;
         }
 
-        public void setMovieRating(double movieRating) {
+        public void setMovieRating(Integer movieRating) {
                 this.movieRating = movieRating;
         }
 
