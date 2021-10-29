@@ -50,7 +50,13 @@
 
 
 .review-body{
+    display: flex;
+    flex-direction: column;
     padding: 15px 45px;
+}
+
+.review-stars{
+    margin: 5px 0;
 }
 
 .review-box{

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${movie.getName()}"></title>
+
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" th:href="@{/css/review.css}">
+    </head>
+
+    <body>
+        <section>
+            <div class="container" th:each="review : ${reviews}">
+                <div class="review-box">
+                    <div class="review-heading">
+                        <div class="picture-name-container">
+                            <div class="review-profile-image-container">
+                                <!--  -->
+                                <img th:src="${review.getUser().getProfilePicPath()}" class="review-profile-image" alt="User Image">
+                            </div>
+                            <div class="review-name-container">
+                                <h4 th:text="${review.getUser().getUsername()}"></h4>
+                            </div>
+                        </div>
+                        <div class="review-date">
+                            <span>10/28/2021 5:34 PM</span>
+                        </div>
+                    </div>
+                    <hr class="horizontal-line"/>
+                    <div class="review-body">
+                        <div th:text="${review.getMovieRating()}" class="review-stars"></div>
+                        <p th:text="${review.getContent()}"></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
