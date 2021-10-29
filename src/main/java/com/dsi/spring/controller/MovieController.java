@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -42,5 +43,15 @@ public class MovieController {
     public String addMovie(Movie movie) {
         movieDao.save(movie);
         return "redirect:/movies/";
+    }
+
+    @GetMapping("/preview/{id}")
+    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model){
+        Movie movie = movieDao.findById(id).orElse(new Movie());
+        //List<Review> reviews = movie.getReviews();
+        model.addAttribute("movie", movie);
+        System.out.println(movie.getReviews());
+        model.addAttribute("reviews", movie.getReviews());
+        return "movie/movie_preview";
     }
 }
