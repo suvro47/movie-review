@@ -11,21 +11,27 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/casts")
+@RequestMapping("/admin/casts")
 public class CastController {
 
     @Autowired
     private CastDao castDao;
 
+    @GetMapping("/")
+    public String index(Model model) {
+        model.addAttribute("casts", castDao.findAll());
+        return "admin/movie/cast/casts";
+    }
+
     @GetMapping("/create")
     public String createCastForm(Model model) {
         model.addAttribute("castForm", new Cast());
-        return "cast/create_cast_form";
+        return "admin/movie/cast/create_cast_form";
     }
 
     @PostMapping("/create")
     public String createCast(Cast cast) {
         castDao.save(cast);
-        return "redirect:/casts";
+        return "redirect:/admin/casts/";
     }
 }

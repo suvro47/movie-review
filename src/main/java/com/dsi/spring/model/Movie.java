@@ -10,6 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Temporal;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity(name = "movie")
 @Table(name = "movie", uniqueConstraints = @UniqueConstraint(name = "movie_name_unique", columnNames = "name"))
@@ -17,6 +20,7 @@ import javax.persistence.UniqueConstraint;
 public class Movie {
 
     @Id
+
     @SequenceGenerator(name = "movie_id_sequence", sequenceName = "movie_id_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "movie_id_sequence")
     @Column(name = "id", updatable = false)
@@ -26,6 +30,8 @@ public class Movie {
     private String name;
 
     @Column(name = "release_date", nullable = false, columnDefinition = "DATE")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    @DateTimeFormat(pattern = "yyyy-mm-dd") // default html date type input date pattern "yyyy-mm-dd"
     private Date releaseDate;
 
     // only for users to see
@@ -38,15 +44,19 @@ public class Movie {
     @Column(name = "poster", nullable = true, columnDefinition = "TEXT")
     private String poster;
 
+    @Column(name = "description", nullable = true, columnDefinition = "TEXT")
+    private String description;
+
     public Movie() {
     }
 
-    public Movie(String name, Date releaseDate, Double rating, String genre, String poster) {
+    public Movie(String name, Date releaseDate, Double rating, String genre, String poster, String description) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.genre = genre;
         this.poster = poster;
+        this.description = description;
     }
 
     public long getId() {
@@ -63,6 +73,14 @@ public class Movie {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 
     public Double getRating() {
@@ -89,6 +107,18 @@ public class Movie {
         this.poster = poster;
     }
 
-    // List<Cast> casts;
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "Movie [id=" + id + ", name=" + name + ", releaseDate=" + releaseDate + ", rating=" + rating + ", genre="
+                + genre + ", poster=" + poster + ", description=" + description + "]";
+    }
 
 }
