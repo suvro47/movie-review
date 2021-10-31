@@ -6,7 +6,7 @@
       <nav th:replace="layouts :: admin_navbar"></nav>
       <div class="container">
         <div style="height: 20px"></div>
-        <p align="center"><a href="/admin/casts/create">Add Cast</a></p>
+        <p align="center"><a href="/admin/actors/create">Add Cast</a></p>
       </div>
         <div>
           <table class="table">
@@ -19,13 +19,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:each="cast : ${casts}">
-                <td th:text="${cast.id}"></td>
-                <td><img height="20px" width="20px"  th:src="@{${cast.imageUrl}}"/></td>
-                <td th:text="${cast.name}"></td>
+              <tr th:each="actor : ${actors}">
+                <td th:text="${actor.id}"></td>
+                <td><img height="20px" width="20px"  th:src="@{${actor.imageUrl}}"/></td>
+                <td th:text="${actor.name}"></td>
                 <td>
-                  <a class="btn btn-danger" th:href="@{/admin/casts/delete/{id}(id=${cast.id})}">Delete</a>
-                  <a class="btn btn-warning" th:href="@{/admin/casts/edit/{id}(id=${cast.id})}">Edit</a>
+                  <a class="btn btn-danger" th:href="@{/admin/actors/delete/{id}(id=${actor.id})}">Delete</a>
+                  <a class="btn btn-warning" th:href="@{/admin/actors/edit/{id}(id=${actor.id})}">Edit</a>
                 </td>
               </tr>
             </tbody>

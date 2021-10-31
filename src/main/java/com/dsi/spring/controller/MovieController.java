@@ -39,7 +39,7 @@ public class MovieController {
         List<Actor> actors = actorService.getActors();
         model.addAttribute("actors", actors);
         model.addAttribute("movieForm", new Movie());
-        return "admin/movie/add_movie_form";
+        return "admin/movie/movie_form";
     }
 
     @PostMapping("/add")
@@ -63,14 +63,14 @@ public class MovieController {
             e.printStackTrace();
         }
 
-        return "admin/movie/add_movie_form";
+        return "admin/movie/movie_form";
     }
 
     @PostMapping("/edit/{id}")
     public String updateMovie(@PathVariable("id") long id, @Validated Movie movie, BindingResult result, Model model) {
         if (result.hasErrors()) {
             movie.setId(id);
-            return "admin/movie/add_movie_form";
+            return "admin/movie/movie_form";
         }
 
         movieService.saveMovie(movie);
