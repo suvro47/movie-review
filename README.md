@@ -2,7 +2,7 @@ It's a web based **Movie Review Application** where users will be able to write 
 
 ## Features
 
-- #01 : User Authentication
+- #01 : Authentication + User & Admin Profile
 
   - Contributors :
     - [suvro47](https://github.com/suvro47/)
@@ -13,7 +13,7 @@ It's a web based **Movie Review Application** where users will be able to write 
     - [Shifat](http://www.github.com/jspw)
     - [Rashid](http://www.github.com/rashid54)
 
-- #03 Reviews(Creating Review Model, Review Repository, Review Controller, Review detail page)
+- #03 Reviews on movie
 
   - Contributors :
     - [NavidMahbub](https://github.com/NavidMahbub)
@@ -33,6 +33,14 @@ It's a web based **Movie Review Application** where users will be able to write 
   <scope>runtime</scope>
 </dependency>
 ```
+- For Thymeleaf template engine
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+```
+
 ## Configure Spring Datasource, JPA, App properties
 Open `src/main/resources/application.properties`
 - For PostgreSQL:
@@ -58,7 +66,6 @@ mvn spring-boot:run
 2. Postgesql  default usename is : postgres
 3. Postgresql database password should be : root
 4. Need to create a database named `dsi`
-5. Change database postgres to dsi
-6. Run the code, that will create all tables in `dsi` database.
-8. Then signin as an admin using username `admin` and password `admin` similarly for `user`, `editor` and `creator`
+5. Run the code, that will create all tables in `dsi` database.
+6. Then signin as an admin using username `admin` and password `admin` similarly for `user`, `editor` and `creator`
 ```
