@@ -60,6 +60,7 @@ body {
 .profile_card_image {
     width : 200px;
     height : 200px;
+    margin-bottom : 20px;
 }
 
 .info {
@@ -67,11 +68,15 @@ body {
     align-items : center;
 }
 
-
 .vertical_line {
      width : 2px;
      height : 200px;
      background-color  : black;
+}
+
+.image_container {
+    display : flex;
+    flex-direction : column;
 }
 
 

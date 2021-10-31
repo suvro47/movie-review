@@ -44,6 +44,11 @@
 
            <div class="image_container">
                <img class="profile_card_image" src="/images/profile/user1.jpg" alt="profile_image" />
+
+               <form sec:authorize="isAuthenticated()" enctype="multipart/form-data" action="@{'/edit/user/profile/image/' + ${user.id}}" method="POST">
+                   <input type="file" name="file" />
+                   <button type="submit" value="submit" style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none; margin-top : 10px;">submit</button>
+               </form>
            </div>
 
        </div>
