@@ -40,9 +40,13 @@
                             </table>
                         </td>
                         <td>
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/edit/user/' + ${user.id}}" >Edit</a>
+                            <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/edit/user/' + ${user.id}}" >
+                                <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Edit</button>
+                            </a>
                             &nbsp; &nbsp;
-                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/user/' + ${user.id}}">Delete</a>
+                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/user/' + ${user.id}}">
+                                <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Delete</button>
+                            </a>
                         </td>
                     </tr>
                 </tbody>
