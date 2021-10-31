@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/admin/casts")
+@RequestMapping("/admin/actors")
 public class ActorController {
 
     @Autowired
@@ -22,50 +22,50 @@ public class ActorController {
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("casts", actorService.getActors());
-        return "admin/movie/cast/casts";
+        model.addAttribute("actors", actorService.getActors());
+        return "admin/movie/actor/actors";
     }
 
     @GetMapping("/create")
-    public String createCastForm(Model model) {
-        model.addAttribute("castForm", new Actor());
-        return "admin/movie/cast/create_cast_form";
+    public String createActorForm(Model model) {
+        model.addAttribute("actorForm", new Actor());
+        return "admin/movie/actor/actor_form";
     }
 
     @PostMapping("/create")
-    public String createCast(Actor cast) {
-        actorService.saveActor(cast);
-        return "redirect:/admin/casts/";
+    public String createActor(Actor actor) {
+        actorService.saveActor(actor);
+        return "redirect:/admin/actors/";
     }
 
     // shows update form
     @GetMapping("/edit/{id}")
-    public String updateCastForm(@PathVariable("id") long id, Model model) {
+    public String updateActorForm(@PathVariable("id") long id, Model model) {
         Actor actor;
         try {
             actor = actorService.getActorById(id);
-            model.addAttribute("castForm", actor);
+            model.addAttribute("actorForm", actor);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        return "admin/movie/cast/create_cast_form";
+        return "admin/movie/actor/actor_form";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateCast(@PathVariable("id") long id, @Validated Actor actor, BindingResult result, Model model) {
+    public String updateActor(@PathVariable("id") long id, @Validated Actor actor, BindingResult result, Model model) {
         if (result.hasErrors()) {
             actor.setId(id);
-            return "admin/movie/cast/create_cast_form";
+            return "admin/movie/actor/actor_form";
         }
 
         actorService.saveActor(actor);
-        return "redirect:/admin/casts/";
+        return "redirect:/admin/actors/";
     }
 
     @GetMapping("/delete/{id}")
-    public String deleteCast(@PathVariable("id") long id, Model model) {
+    public String deleteActor(@PathVariable("id") long id, Model model) {
         Actor actor;
         try {
             actor = actorService.getActorById(id);
@@ -75,6 +75,6 @@ public class ActorController {
             e.printStackTrace();
         }
 
-        return "redirect:/admin/casts/";
+        return "redirect:/admin/actors/";
     }
 }
