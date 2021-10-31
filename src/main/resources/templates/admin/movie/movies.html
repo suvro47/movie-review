@@ -22,7 +22,9 @@
             <tbody>
               <tr th:each="movie : ${movies}">
                 <td th:text="${movie.id}"></td>
-                <td><img th:src="@{movie.poster}" /></td>
+                <td>
+                  <img height="20px" width="20px" th:src="@{${movie.poster}}" />
+                </td>
                 <td th:text="${movie.name}"></td>
                 <td th:text="${movie.genre}"></td>
                 <td th:text="${movie.releaseDate}"></td>
