@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: head"> </head>
+  <body>
+    <div class="container">
+      <!-- <nav th:replace="navbar :: navbar_content"></nav> -->
+      <div class="container">
+        <div class="row">
+          <div class="col" th:each="movie : ${movies}">
+            <button
+              style="
+                padding: 5px;
+                margin: 5px;
+                border: none;
+                background-color: aliceblue;
+                border: 3px solid #81abd3;
+                border-radius: 10px;
+              "
+            >
+              <div class="card" style="width: 18rem">
+                <img
+                  height="300px"
+                  th:src="@{${movie.poster}}"
+                  class="card-img-top"
+                  alt="..."
+                />
+              </div>
+              <div class="card-body">
+                <h5 class="card-title" th:text="${movie.name}"></h5>
+                <p class="card-text" th:text="${movie.releaseDate}"></p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
