@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashSet;
 import java.util.List;
@@ -57,8 +56,8 @@ public class AuthController {
 
     @RequestMapping("/signup-submit")
     public String signup_submit(User user) {
-        // default role set ad admin
-        Role role = roleDao.findById(4).orElse(new Role()); // admin role fetched
+        // default role set as user
+        Role role = roleDao.findById(1).orElse(new Role()); // user role fetched
         Set<Role> roles = new HashSet<Role>();
         roles.add(role);
         user.setRoles(roles);
@@ -87,6 +86,28 @@ public class AuthController {
         User user = userDao.findById(principal.getId()).orElse( new User());
         model.addAttribute("user", user);
         return "profile";
+    }
+
+    @RequestMapping("/edit/user/{id}")
+    public String editUserPage( @PathVariable(value="id") Long userId , Model model ) {
+        User user = userDao.findById(userId).orElse( new User());
+        model.addAttribute("user", user);
+        model.addAttribute("allRole" , roleDao.findAll());
+        return "edit_user";
+    }
+
+    @RequestMapping("/edit/user/{id}/submit")
+    public String editUserSubmit( @PathVariable(value="id") Long userId , User userDetails ) {
+        System.out.println(userDetails);
+        User user = userDao.findById(userId).orElse( new User());
+        user.setUsername(userDetails.getUsername());
+        user.setPassword(userDetails.getPassword());
+        user.setFirstName(userDetails.getFirstName());
+        user.setLastName(userDetails.getLastName());
+        user.setEmail(userDetails.getEmail());
+        user.setRoles(userDetails.getRoles());
+        userDao.save(user);
+        return "redirect:/all_user";
     }
 
 }
