@@ -21,25 +21,27 @@ public class MovieController {
     private MovieService movieService;
 
     @Autowired
-    private ActorService castService;
+    private ActorService actorService;
 
     @GetMapping("/")
     public String getMovies(Model model) {
         List<Movie> movies = movieService.getMovies();
+        System.out.println(movies.toString());
         model.addAttribute("movies", movies);
         return "admin/movie/movies";
     }
 
     @GetMapping("/add")
     public String addMovieForm(Model model) {
-        List<Actor> casts = castService.getActors();
-        model.addAttribute("casts", casts);
+        List<Actor> actors = actorService.getActors();
+        model.addAttribute("actors", actors);
         model.addAttribute("movieForm", new Movie());
         return "admin/movie/add_movie_form";
     }
 
     @PostMapping("/add")
     public String addMovie(Movie movie) {
+
         movieService.addMovie(movie);
         return "redirect:/admin/movies/";
     }
