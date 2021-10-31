@@ -1,11 +1,10 @@
 package com.dsi.spring.controller;
 
 import java.util.List;
-
-import com.dsi.spring.dao.CastDao;
-import com.dsi.spring.dao.MovieDao;
 import com.dsi.spring.model.Cast;
 import com.dsi.spring.model.Movie;
+import com.dsi.spring.services.CastService;
+import com.dsi.spring.services.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,21 +18,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MovieController {
 
     @Autowired
-    private MovieDao movieDao;
+    private MovieService movieService;
 
     @Autowired
-    private CastDao castDao;
+    private CastService castService;
 
     @GetMapping("/")
     public String getMovies(Model model) {
-        List<Movie> movies = movieDao.findAll();
+        List<Movie> movies = movieService.getMovies();
         model.addAttribute("movies", movies);
         return "admin/movie/movies";
     }
 
     @GetMapping("/add")
     public String addMovieForm(Model model) {
-        List<Cast> casts = castDao.findAll();
+        List<Cast> casts = castService.getCasts();
         model.addAttribute("casts", casts);
         model.addAttribute("movieForm", new Movie());
         return "admin/movie/add_movie_form";
@@ -41,7 +40,7 @@ public class MovieController {
 
     @PostMapping("/add")
     public String addMovie(Movie movie) {
-        movieDao.save(movie);
+        movieService.addMovie(movie);
         return "redirect:/admin/movies/";
     }
 }

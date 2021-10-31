@@ -1,7 +1,7 @@
 package com.dsi.spring.controller;
 
-import com.dsi.spring.dao.CastDao;
 import com.dsi.spring.model.Cast;
+import com.dsi.spring.services.CastService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class CastController {
 
     @Autowired
-    private CastDao castDao;
+    private CastService castService;
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("casts", castDao.findAll());
+        model.addAttribute("casts", castService.getCasts());
         return "admin/movie/cast/casts";
     }
 
@@ -31,7 +31,7 @@ public class CastController {
 
     @PostMapping("/create")
     public String createCast(Cast cast) {
-        castDao.save(cast);
+        castService.createCast(cast);
         return "redirect:/admin/casts/";
     }
 }
