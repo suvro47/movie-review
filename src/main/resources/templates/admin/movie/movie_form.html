@@ -78,7 +78,13 @@
             <textarea class="form-control" id="description" rows="3"></textarea>
           </div>
 
-          <button type="submit" class="btn btn-primary" th:text="(${movieForm}?'Update':'Add')">Add</button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            th:text="(${movieForm.id}?'Update':'Add')"
+          >
+            Add
+          </button>
         </form>
       </div>
     </div>
