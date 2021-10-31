@@ -13,7 +13,8 @@
 
        <div class="profile_card">
 
-           <div class="profile_card_details">
+           <div class="profile_card_details" th:object="${user}">
+
                <div class="info profile_card_details-username">
                    <p> Username : </p>
                    <p th:text="${user.username}">Username</p>
@@ -43,11 +44,11 @@
            <div class="vertical_line"> </div>
 
            <div class="image_container">
-               <img class="profile_card_image" src="/images/profile/user1.jpg" alt="profile_image" />
+               <img class="profile_card_image" th:src="@{${user.profilePicPath}}" />
 
-               <form sec:authorize="isAuthenticated()" enctype="multipart/form-data" action="@{'/edit/user/profile/image/' + ${user.id}}" method="POST">
+               <form sec:authorize="isAuthenticated()" enctype="multipart/form-data" th:action="@{'/edit/user/profile/image/' + ${user.id}}" method="POST">
                    <input type="file" name="file" />
-                   <button type="submit" value="submit" style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none; margin-top : 10px;">submit</button>
+                   <button type="submit" style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Submit</button>
                </form>
            </div>
 

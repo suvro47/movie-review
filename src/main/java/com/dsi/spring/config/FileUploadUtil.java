@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
 
-    public static String saveFile(Long employeeId, String uploadDir, MultipartFile file) throws IOException {
+    public static String saveFile(Long userId, String uploadDir, MultipartFile file) throws IOException {
 
         Path uploadPath = Paths.get(uploadDir);
         String newFileName = null;
@@ -21,7 +21,7 @@ public class FileUploadUtil {
 
         try {
             String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            newFileName = System.currentTimeMillis() + employeeId + fileExtension;
+            newFileName = System.currentTimeMillis() + userId + fileExtension;
             Path filePath = uploadPath.resolve(newFileName);
             Files.copy( file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException ioe) {

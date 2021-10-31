@@ -64,6 +64,7 @@ public class AuthController {
         Set<Role> roles = new HashSet<Role>();
         roles.add(role);
         user.setRoles(roles);
+        user.setProfilePicPath("/images/profile/default.png");
 
         user.setEnabled(true);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
@@ -118,14 +119,17 @@ public class AuthController {
 
         try {
             String uploadDir = "src/main/resources/static/images/profile";
-            String fileName = "images/profile/" + FileUploadUtil.saveFile(id, uploadDir, file);
-            System.out.println("File Uploaded Successfully : " + fileName);
+            String profilePicPath = "images/profile/" + FileUploadUtil.saveFile(id, uploadDir, file);
+            System.out.println("File Uploaded Successfully : " + profilePicPath);
+
+            User user = userDao.findById(id).orElse(new User());
+            user.setProfilePicPath(profilePicPath);
+            userDao.save(user);
 
         } catch (Exception e) {
             System.out.println("Excepton : " + e + " has occured.");
         }
-
-        return "redirect:/profile";
+        return "redirect:/user_profile";
     }
 
 
