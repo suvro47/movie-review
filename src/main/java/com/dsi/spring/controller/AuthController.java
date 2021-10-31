@@ -101,7 +101,6 @@ public class AuthController {
         System.out.println(userDetails);
         User user = userDao.findById(userId).orElse( new User());
         user.setUsername(userDetails.getUsername());
-        user.setPassword(userDetails.getPassword());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());

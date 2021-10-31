@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <title>Profile</title>
 </head>
@@ -10,17 +11,39 @@
 
     <div class="container">
 
-       <div class="card">
+       <div class="profile_card">
 
-           <div class="card_details">
-               <p th:text="${user.username}">Username</p>
-               <p th:text="${user.firstName}">FirstName</p>
-               <p th:text="${user.lastName}">LastName</p>
-               <p th:text="${user.email}">Email</p>
+           <div class="profile_card_details">
+               <div class="info profile_card_details-username">
+                   <p> Username : </p>
+                   <p th:text="${user.username}">Username</p>
+               </div>
+
+               <div class="info profile_card_details-firstname">
+                   <p> First Name : </p>
+                   <p th:text="${user.firstName}">FirstName</p>
+               </div>
+
+              <div class="info profile_card_details-lastname">
+                  <p> Last Name : </p>
+                  <p th:text="${user.lastName}">LastName</p>
+              </div>
+
+               <div class="info profile_card_details-email">
+                   <p> Email : </p>
+                   <p th:text="${user.email}">Email</p>
+               </div>
+
+               <a sec:authorize="isAuthenticated()" th:href="@{'/edit/user/' + ${user.id}}" >
+                   <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Edit</button>
+               </a>
+
            </div>
 
-           <div class="card_image">
-               <img src="/" alt="profile_image" />
+           <div class="vertical_line"> </div>
+
+           <div class="image_container">
+               <img class="profile_card_image" src="/images/profile/user1.jpg" alt="profile_image" />
            </div>
 
        </div>
