@@ -1,12 +1,17 @@
 package com.dsi.spring.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -47,16 +52,23 @@ public class Movie {
     @Column(name = "description", nullable = true, columnDefinition = "TEXT")
     private String description;
 
+    @ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+    @JoinTable(name = "movie_actor", joinColumns = { @JoinColumn(name = "movie_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "actor_id") })
+    private Set<Actor> actors;
+
     public Movie() {
     }
 
-    public Movie(String name, Date releaseDate, Double rating, String genre, String poster, String description) {
+    public Movie(String name, Date releaseDate, Double rating, String genre, String poster, String description,
+            Set<Actor> actors) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.rating = rating;
         this.genre = genre;
         this.poster = poster;
         this.description = description;
+        this.actors = actors;
     }
 
     public long getId() {
@@ -115,10 +127,17 @@ public class Movie {
         this.description = description;
     }
 
+    public Set<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(Set<Actor> actors) {
+        this.actors = actors;
+    }
+
     @Override
     public String toString() {
         return "Movie [id=" + id + ", name=" + name + ", releaseDate=" + releaseDate + ", rating=" + rating + ", genre="
-                + genre + ", poster=" + poster + ", description=" + description + "]";
+                + genre + ", poster=" + poster + ", description=" + description + ", actors=" + actors + "]";
     }
-
 }
