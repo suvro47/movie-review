@@ -29,8 +29,8 @@
                 <td th:text="${movie.genre}"></td>
                 <td th:text="${movie.releaseDate}"></td>
                 <td>
-                  <button class="btn btn-danger">Delete</button>
-                  <button class="btn btn-warning">Edit</button>
+                  <a class="btn btn-danger" th:href="@{/admin/movies/delete/{id}(id=${movie.id})}">Delete</a>
+                  <a class="btn btn-warning" th:href="@{/admin/movies/edit/{id}(id=${movie.id})}">Edit</a>
                 </td>
               </tr>
             </tbody>
