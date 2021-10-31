@@ -6,7 +6,11 @@
       <nav th:replace="layouts :: admin_navbar"></nav>
       <div class="container">
         <h1 align="center">Add a New Movie</h1>
-        <form th:object="${movieForm}" action="/admin/movies/add" method="post">
+        <form
+          th:object="${movieForm}"
+          th:action="@{/admin/movies/{action}(action=${movieForm.id}?'edit/'+${movieForm.id}:'add')}"
+          method="post"
+        >
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name">Name</label>
@@ -23,6 +27,7 @@
               <input
                 name="release_date"
                 th:field="*{releaseDate}"
+                value="${releaseDate}"
                 type="date"
                 class="form-control"
                 id="release_date"

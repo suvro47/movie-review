@@ -8,7 +8,7 @@
         <h1 align="center">Create A New Cast</h1>
         <form
           th:object="${castForm}"
-          action="/admin/casts/create"
+          th:action="@{/admin/casts/{action}(action=${castForm.id}?'edit/'+${castForm.id}:'create')}"
           method="post"
         >
           <div class="mb-3">

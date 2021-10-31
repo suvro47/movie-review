@@ -16,7 +16,7 @@ public class MovieServiceImpl implements MovieService {
     private MovieDao movieDao;
 
     @Override
-    public void addMovie(Movie movie) {
+    public void saveMovie(Movie movie) {
         movieDao.save(movie);
 
     }
@@ -25,6 +25,17 @@ public class MovieServiceImpl implements MovieService {
     public List<Movie> getMovies() {
 
         return movieDao.findAll();
+    }
+
+    @Override
+    public void deleteMovie(Movie movie) {
+        movieDao.delete(movie);
+
+    }
+
+    @Override
+    public Movie getMovieById(Long id) throws Exception {
+        return movieDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Movie id: " + id));
     }
 
 }

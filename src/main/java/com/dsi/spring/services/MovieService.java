@@ -8,7 +8,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MovieService {
-    void addMovie(Movie movie);
+    void saveMovie(Movie movie);
 
     List<Movie> getMovies();
+
+    void deleteMovie(Movie movie);
+
+    Movie getMovieById(Long id) throws Exception;
 }

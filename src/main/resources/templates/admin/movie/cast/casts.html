@@ -24,8 +24,8 @@
                 <td><img height="20px" width="20px"  th:src="@{${cast.imageUrl}}"/></td>
                 <td th:text="${cast.name}"></td>
                 <td>
-                  <button class="btn btn-danger">Delete</button>
-                  <button class="btn btn-warning">Edit</button>
+                  <a class="btn btn-danger" th:href="@{/admin/casts/delete/{id}(id=${cast.id})}">Delete</a>
+                  <a class="btn btn-warning" th:href="@{/admin/casts/edit/{id}(id=${cast.id})}">Edit</a>
                 </td>
               </tr>
             </tbody>

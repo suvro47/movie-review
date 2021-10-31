@@ -16,7 +16,7 @@ public class ActorServiceImpl implements ActorService {
     private ActorDao actorDao;
 
     @Override
-    public void createActor(Actor cast) {
+    public void saveActor(Actor cast) {
         actorDao.save(cast);
 
     }
@@ -24,6 +24,19 @@ public class ActorServiceImpl implements ActorService {
     @Override
     public List<Actor> getActors() {
         return actorDao.findAll();
+    }
+
+    @Override
+    public void deleteActor(Actor actor) {
+
+        actorDao.delete(actor);
+
+    }
+
+    @Override
+    public Actor getActorById(Long id) {
+
+        return actorDao.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid Cast id: " + id));
     }
 
 }

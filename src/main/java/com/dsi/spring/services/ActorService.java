@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface ActorService {
-    void createActor(Actor actor);
+    void saveActor(Actor actor);
 
     List<Actor> getActors();
+
+    void deleteActor(Actor actor);
+
+    Actor getActorById(Long id) throws Exception;
 
 }
