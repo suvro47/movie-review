@@ -1,9 +1,9 @@
 package com.dsi.spring.controller;
 
 import java.util.List;
-import com.dsi.spring.model.Cast;
+import com.dsi.spring.model.Actor;
 import com.dsi.spring.model.Movie;
-import com.dsi.spring.services.CastService;
+import com.dsi.spring.services.ActorService;
 import com.dsi.spring.services.MovieService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class MovieController {
     private MovieService movieService;
 
     @Autowired
-    private CastService castService;
+    private ActorService castService;
 
     @GetMapping("/")
     public String getMovies(Model model) {
@@ -32,7 +32,7 @@ public class MovieController {
 
     @GetMapping("/add")
     public String addMovieForm(Model model) {
-        List<Cast> casts = castService.getCasts();
+        List<Actor> casts = castService.getActors();
         model.addAttribute("casts", casts);
         model.addAttribute("movieForm", new Movie());
         return "admin/movie/add_movie_form";

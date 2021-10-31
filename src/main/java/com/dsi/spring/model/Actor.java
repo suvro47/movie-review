@@ -1,22 +1,25 @@
 package com.dsi.spring.model;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity(name = "actor")
-@Table(name = "actor", uniqueConstraints = @UniqueConstraint(name = "cast_name_unique", columnNames = "name"))
+@Table(name = "actor", uniqueConstraints = @UniqueConstraint(name = "actor_name_unique", columnNames = "name"))
 
-public class Cast {
+public class Actor {
 
     @Id
-    @SequenceGenerator(name = "cast_id_sequence", sequenceName = "cast_id_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cast_id_sequence")
+    @SequenceGenerator(name = "actor_id_sequence", sequenceName = "actor_id_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "actor_id_sequence")
     @Column(name = "id", updatable = false)
     private long id;
 
@@ -26,12 +29,16 @@ public class Cast {
     @Column(name = "imageUrl", nullable = true, columnDefinition = "TEXT")
     private String imageUrl;
 
-    public Cast() {
+    @ManyToMany(mappedBy = "actors")
+    private Set<Movie> movies;
+
+    public Actor() {
     }
 
-    public Cast(String name, String imageUrl) {
+    public Actor(String name, String imageUrl, Set<Movie> movies) {
         this.name = name;
         this.imageUrl = imageUrl;
+        this.movies = movies;
     }
 
     public long getId() {
@@ -56,6 +63,19 @@ public class Cast {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Set<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(Set<Movie> movies) {
+        this.movies = movies;
+    }
+
+    @Override
+    public String toString() {
+        return "Actor [id=" + id + ", name=" + name + ", imageUrl=" + imageUrl + "]";
     }
 
 }
