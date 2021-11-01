@@ -33,13 +33,24 @@
     justify-content: center;
 }
 
+.review-date-delete{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
 .review-date{
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-
+.review-delete{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
 
 .horizontal-line{
     width: 90%;

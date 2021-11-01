@@ -48,9 +48,7 @@ public class MovieController {
     @GetMapping("/preview/{id}")
     public String getSingleMovie(@PathVariable(value = "id") Long id, Model model){
         Movie movie = movieDao.findById(id).orElse(new Movie());
-        //List<Review> reviews = movie.getReviews();
         model.addAttribute("movie", movie);
-        System.out.println(movie.getReviews());
         model.addAttribute("reviews", movie.getReviews());
         return "movie/movie_preview";
     }
