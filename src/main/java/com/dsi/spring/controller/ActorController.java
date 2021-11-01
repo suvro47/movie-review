@@ -38,9 +38,8 @@ public class ActorController {
     // shows update form
     @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
     public String updateActorForm(@PathVariable("id") long id, Model model) {
-        Actor actor;
         try {
-            actor = actorService.getActorById(id);
+            Actor actor = actorService.getActorById(id);
             model.addAttribute("actorForm", actor);
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -63,9 +62,8 @@ public class ActorController {
 
     @RequestMapping(value = "/delete/{id}")
     public String deleteActor(@PathVariable("id") long id, Model model) {
-        Actor actor;
         try {
-            actor = actorService.getActorById(id);
+            Actor actor = actorService.getActorById(id);
             actorService.deleteActor(actor);
         } catch (Exception e) {
             // TODO Auto-generated catch block
