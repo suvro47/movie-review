@@ -11,9 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MovieController {
@@ -24,7 +22,7 @@ public class MovieController {
     @Autowired
     private ActorService actorService;
 
-    @GetMapping("/movies")
+    @RequestMapping("/movies")
     public String getHomeMovies(Model model) {
 
         List<Movie> movies = movieService.getMovies();
@@ -33,7 +31,7 @@ public class MovieController {
         return "user/home";
     }
 
-    @GetMapping("/admin/movies")
+    @RequestMapping("/admin/movies")
     public String getMovies(Model model) {
         List<Movie> movies = movieService.getMovies();
         System.out.println(movies.toString());
@@ -41,7 +39,7 @@ public class MovieController {
         return "admin/movie/movies";
     }
 
-    @GetMapping("/admin/movies/add")
+    @RequestMapping(value = "/admin/movies/add",method = RequestMethod.GET)
     public String addMovieForm(Model model) {
         List<Actor> actors = actorService.getActors();
         model.addAttribute("actors", actors);
@@ -49,7 +47,7 @@ public class MovieController {
         return "admin/movie/movie_form";
     }
 
-    @PostMapping("/admin/movies/add")
+    @RequestMapping(value = "/admin/movies/add",method = RequestMethod.POST)
     public String addMovie(Movie movie) {
 
         movieService.saveMovie(movie);
@@ -57,7 +55,7 @@ public class MovieController {
     }
 
     // shows update form
-    @GetMapping("/admin/movies/edit/{id}")
+    @RequestMapping(value = "/admin/movies/edit/{id}",method = RequestMethod.GET)
     public String updateMovieForm(@PathVariable("id") long id, Model model) {
         List<Actor> actors = actorService.getActors();
         model.addAttribute("actors", actors);
@@ -73,7 +71,7 @@ public class MovieController {
         return "admin/movie/movie_form";
     }
 
-    @PostMapping("/admin/movies/edit/{id}")
+    @RequestMapping(value = "/admin/movies/edit/{id}",method = RequestMethod.POST)
     public String updateMovie(@PathVariable("id") long id, @Validated Movie movie, BindingResult result, Model model) {
         if (result.hasErrors()) {
             movie.setId(id);
@@ -84,7 +82,7 @@ public class MovieController {
         return "redirect:/admin/movies/";
     }
 
-    @GetMapping("/admin/movies/delete/{id}")
+    @RequestMapping("/admin/movies/delete/{id}")
     public String deleteMovie(@PathVariable("id") long id, Model model) {
         try {
             Movie movie = movieService.getMovieById(id);

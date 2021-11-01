@@ -9,6 +9,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieDao extends JpaRepository<Movie, Long> {
 
-    @Override
-    List<Movie> findAll();
 }

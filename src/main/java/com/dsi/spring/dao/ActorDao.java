@@ -10,7 +10,4 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ActorDao extends JpaRepository<Actor, Long> {
 
-    @Override
-    List<Actor> findAll();
-
 }
