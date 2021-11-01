@@ -26,8 +26,8 @@
               <label for="release_date">Release Date</label>
               <input
                 name="release_date"
+                th:value="${#dates.format(movieForm.releaseDate,'yyyy-mm-dd')}"
                 th:field="*{releaseDate}"
-                value="${releaseDate}"
                 type="date"
                 class="form-control"
                 id="release_date"
