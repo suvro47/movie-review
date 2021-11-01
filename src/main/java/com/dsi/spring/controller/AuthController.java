@@ -5,11 +5,9 @@ import com.dsi.spring.dao.UserDao;
 import com.dsi.spring.model.Role;
 import com.dsi.spring.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.HashSet;
@@ -24,7 +22,7 @@ public class AuthController {
     @Autowired
     private RoleDao roleDao;
 
-    @GetMapping("/")
+    @RequestMapping("/")
     public String home() {
         return "index";
     }
@@ -45,7 +43,7 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/signup")
+    @RequestMapping("/signup")
     public String signupPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
@@ -55,16 +53,21 @@ public class AuthController {
     @RequestMapping("/signup-submit")
     public String signup_submit(User user) {
 
+        System.out.println("I am here");
+
         // default role set ad admin
-        Role role = roleDao.findById(4).orElse( new Role()); // admin role fetched
+        Role role = roleDao.findById(4).orElse(new Role()); // admin role fetched
         Set<Role> roles = new HashSet<Role>();
         roles.add(role);
         user.setRoles(roles);
 
-
         user.setEnabled(true);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
-        userDao.save(user);
+        User savedUser = userDao.save(user);
+
+
+        System.out.println(savedUser);
+
         return "login";
     }
 
