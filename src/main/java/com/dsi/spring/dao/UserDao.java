@@ -6,10 +6,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
 
-    @Query("SELECT u FROM User u WHERE u.username = :username")
-    public User getUserByUsername(@Param("username") String username);
+    public User findByUsername(String username);
+
+    @Query(value= "SELECT users.* FROM users ORDER BY user_id ASC", nativeQuery = true)
+    public List<User> findAllUser();
+
 
 }

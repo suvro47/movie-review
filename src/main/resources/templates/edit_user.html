@@ -34,7 +34,7 @@
                     <input type="text" class="form-control" id="input_email" th:field="*{email}" required>
                 </div>
 
-                <div sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')">
+                <div sec:authorize="hasAnyAuthority('ADMIN')">
                     <label for="input_role" style="display : block;">Role(s)</label>
                      <div th:each="role : ${allRole}" style="display : inline;">
                         <input class="checkbox-control" style="display : inline; margin: 0 10px;" id="input_role" type="checkbox" th:field="*{roles}"  th:value="${role.id}" />

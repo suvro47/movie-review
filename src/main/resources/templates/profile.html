@@ -36,7 +36,7 @@
                </div>
 
                <a sec:authorize="isAuthenticated()" th:href="@{'/edit/user/' + ${user.id}}" >
-                   <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Edit</button>
+                   <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px;">Edit</button>
                </a>
 
            </div>
@@ -48,7 +48,7 @@
 
                <form sec:authorize="isAuthenticated()" enctype="multipart/form-data" th:action="@{'/edit/user/profile/image/' + ${user.id}}" method="POST">
                    <input type="file" name="file" />
-                   <button type="submit" style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Submit</button>
+                   <button type="submit" class="btn btn-primary btn-sm" style="margin-top: 10px;">Submit</button>
                </form>
            </div>
 

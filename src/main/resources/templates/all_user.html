@@ -21,7 +21,7 @@
                     <th scope="col">Email</th>
                     <th scope="col">Active</th>
                     <th scope="col">Roles</th>
-                    <th sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" scope="col" >Actions</th>
+                    <th sec:authorize="hasAnyAuthority('ADMIN')" scope="col" >Actions</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -39,13 +39,13 @@
                                 </tr>
                             </table>
                         </td>
-                        <td>
-                            <a sec:authorize="hasAnyAuthority('ADMIN', 'EDITOR')" th:href="@{'/edit/user/' + ${user.id}}" >
-                                <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Edit</button>
+                        <td sec:authorize="hasAnyAuthority('ADMIN')">
+                            <a th:href="@{'/edit/user/' + ${user.id}}" >
+                                <button type="submit" class="btn btn-primary btn-sm">Edit</button>
                             </a>
                             &nbsp; &nbsp;
-                            <a sec:authorize="hasAuthority('ADMIN')" th:href="@{'/delete/user/' + ${user.id}}">
-                                <button style="width : 40px; padding : 5px 10px; border-radius : 10px; border : none;">Delete</button>
+                            <a th:href="@{'/delete/user/' + ${user.id}}">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </a>
                         </td>
                     </tr>
