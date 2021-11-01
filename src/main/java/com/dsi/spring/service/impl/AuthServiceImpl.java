@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
     public String signupPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "signup";
+        return "home/signup";
     }
 
     @Override
@@ -43,27 +43,27 @@ public class AuthServiceImpl implements AuthService {
         user.setEnabled(true);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
         User savedUser = userDao.save(user);
-        return "login";
+        return "home/login";
     }
 
     @Override
     public String allUser(Model model) {
         List<User> users = userDao.findAllUser();
         model.addAttribute("allUser", users);
-        return "all_user";
+        return "home/all_user";
     }
 
     @Override
     public String deleteUser(Long userId) {
         userDao.deleteById(userId);
-        return "redirect:/all_user";
+        return "redirect:/home/all_user";
     }
 
     @Override
     public String profile(MyUserDetails principal, Model model) {
         User user = userDao.findById(principal.getId()).orElse( new User());
         model.addAttribute("user", user);
-        return "profile";
+        return "home/profile";
     }
 
     @Override
@@ -71,7 +71,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userDao.findById(userId).orElse( new User());
         model.addAttribute("user", user);
         model.addAttribute("allRole" , roleDao.findAll());
-        return "edit_user";
+        return "home/edit_user";
     }
 
     @Override
@@ -83,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(userDetails.getEmail());
         user.setRoles(userDetails.getRoles());
         userDao.save(user);
-        return "redirect:/all_user";
+        return "redirect:/home/all_user";
     }
 
 
