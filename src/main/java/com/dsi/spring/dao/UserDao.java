@@ -11,10 +11,10 @@ import java.util.List;
 @Repository
 public interface UserDao extends JpaRepository<User, Long> {
 
-    public User findByUsername(String username);
+    User findByUsername(String username);
 
-    @Query(value= "SELECT users.* FROM users ORDER BY user_id ASC", nativeQuery = true)
-    public List<User> findAllUser();
+    @Query(value= "SELECT users.* FROM users WHERE  user_id > 1  ORDER BY user_id ASC", nativeQuery = true)
+    List<User> findAllUser();
 
 
 }

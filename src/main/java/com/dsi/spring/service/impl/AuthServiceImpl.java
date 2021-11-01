@@ -2,6 +2,8 @@ package com.dsi.spring.service.impl;
 
 import com.dsi.spring.dao.RoleDao;
 import com.dsi.spring.dao.UserDao;
+import com.dsi.spring.exception.ResourceAlreadyExists;
+import com.dsi.spring.exception.ResourceNotFoundException;
 import com.dsi.spring.model.Role;
 import com.dsi.spring.model.User;
 import com.dsi.spring.security.MyUserDetails;
@@ -9,7 +11,6 @@ import com.dsi.spring.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import java.util.HashSet;
 import java.util.List;
@@ -25,16 +26,13 @@ public class AuthServiceImpl implements AuthService {
     private RoleDao roleDao;
 
     @Override
-    public String signupPage(Model model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "home/signup";
-    }
+    public void signupSubmit(User user) throws  ResourceAlreadyExists {
 
-    @Override
-    public String signup_submit(User user) {
+        if( userDao.findByUsername(user.getUsername()) != null )
+            throw new ResourceAlreadyExists("Username Already exists");
+
         // default role set as user
-        Role role = roleDao.findById(1).orElse(new Role()); // user role fetched
+        Role role = roleDao.findByName("USER");
         Set<Role> roles = new HashSet<Role>();
         roles.add(role);
         user.setRoles(roles);
@@ -43,39 +41,42 @@ public class AuthServiceImpl implements AuthService {
         user.setEnabled(true);
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
         User savedUser = userDao.save(user);
-        return "home/login";
     }
 
     @Override
-    public String allUser(Model model) {
+    public List<User> allUser() throws ResourceNotFoundException {
         List<User> users = userDao.findAllUser();
-        model.addAttribute("allUser", users);
-        return "home/all_user";
+        if( users.isEmpty() ) throw new ResourceNotFoundException("No User found");
+        return users;
     }
 
     @Override
-    public String deleteUser(Long userId) {
+    public void deleteUser(Long userId) throws ResourceNotFoundException {
+
+        User user = userDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         userDao.deleteById(userId);
-        return "redirect:/home/all_user";
     }
 
     @Override
-    public String profile(MyUserDetails principal, Model model) {
+    public User profile(MyUserDetails principal) {
         User user = userDao.findById(principal.getId()).orElse( new User());
-        model.addAttribute("user", user);
-        return "home/profile";
+        return user;
     }
 
     @Override
-    public String editUserPage(Long userId, Model model) {
-        User user = userDao.findById(userId).orElse( new User());
-        model.addAttribute("user", user);
-        model.addAttribute("allRole" , roleDao.findAll());
-        return "home/edit_user";
+    public User setEditUserPage(Long userId) throws ResourceNotFoundException {
+
+        User user = userDao.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
+        return user;
     }
 
     @Override
-    public String editUserSubmit(Long userId, User userDetails) {
+    public void editUserSubmit(Long userId, User userDetails) {
+
         User user = userDao.findById(userId).orElse( new User());
         user.setUsername(userDetails.getUsername());
         user.setFirstName(userDetails.getFirstName());
@@ -83,7 +84,6 @@ public class AuthServiceImpl implements AuthService {
         user.setEmail(userDetails.getEmail());
         user.setRoles(userDetails.getRoles());
         userDao.save(user);
-        return "redirect:/home/all_user";
     }
 
 

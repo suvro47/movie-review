@@ -1,23 +1,25 @@
 package com.dsi.spring.service;
 
+import com.dsi.spring.exception.ResourceAlreadyExists;
+import com.dsi.spring.exception.ResourceNotFoundException;
 import com.dsi.spring.model.User;
 import com.dsi.spring.security.MyUserDetails;
 import org.springframework.ui.Model;
 
+import java.util.List;
+
 public interface AuthService {
 
-    String signupPage(Model model);
+    void signupSubmit(User user) throws ResourceAlreadyExists;
 
-    String signup_submit(User user);
+    List<User> allUser() throws ResourceNotFoundException;
 
-    String allUser(Model model);
+    void deleteUser(Long userId) throws ResourceNotFoundException;
 
-    String deleteUser(Long userId);
+    User profile(MyUserDetails principal);
 
-    String profile(MyUserDetails principal, Model model );
+    User setEditUserPage(Long userId) throws ResourceNotFoundException;
 
-    String editUserPage(Long userId , Model model);
-
-    String editUserSubmit( Long userId , User userDetails);
+    void editUserSubmit( Long userId , User userDetails);
 
 }

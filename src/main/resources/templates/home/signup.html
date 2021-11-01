@@ -10,8 +10,9 @@
 	
 	<div class="container">
 
-		<form class="form-container text-center" th:action="@{/signup-submit}" th:object="${user}" method='POST'>
+		<form class="form-container text-center" th:action="@{/signup}" th:object="${user}" method='POST'>
 			<p class="form-title"> Please Register Here </p>
+			<p th:if="${signupError}" class="error"> Username already exist </p>
 	        <div class="form-group">
 				<label for="input_username">Username</label> 
 				<input type="text" class="form-control" id="input_username" placeholder="Username" name='username' required>

@@ -1,5 +1,8 @@
 package com.dsi.spring.controller;
 
+import com.dsi.spring.dao.RoleDao;
+import com.dsi.spring.exception.ResourceAlreadyExists;
+import com.dsi.spring.exception.ResourceNotFoundException;
 import com.dsi.spring.model.User;
 import com.dsi.spring.security.MyUserDetails;
 import com.dsi.spring.service.AuthService;
@@ -11,13 +14,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @Controller
 public class AuthController {
 
     @Autowired
     private AuthService authService;
 
-    @RequestMapping(value="/", method = RequestMethod.GET)
+    @Autowired
+    private RoleDao roleDao;
+
+    @RequestMapping("/")
     public String home() {
         return "index";
     }
@@ -38,41 +46,78 @@ public class AuthController {
         return "home/login";
     }
 
-    @RequestMapping("/signup")
+    @RequestMapping(value="/signup", method = RequestMethod.GET)
     public String signupPage(Model model) {
-        return authService.signupPage(model);
+        User user = new User();
+        model.addAttribute("user", user);
+        return "home/signup";
     }
 
-    @RequestMapping("/signup-submit")
-    public String signup_submit(User user) {
-        return authService.signup_submit(user);
+    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    public String signupSubmit(User user, Model model) {
+        try {
+            authService.signupSubmit(user);
+            return "home/login";
+        } catch (ResourceAlreadyExists e) {
+            model.addAttribute("signupError", true);
+            return "home/signup";
+        }
     }
 
     @RequestMapping("/all_user")
     public String allUser(Model model) {
-        return authService.allUser(model);
+        try {
+            List<User> users = authService.allUser();
+            model.addAttribute("allUser", users);
+        } catch (ResourceNotFoundException e ) {
+            model.addAttribute("error", true);
+        }
+        return "home/all_user";
     }
 
     @RequestMapping("/delete/user/{id}")
     public String deleteUser( @PathVariable(value="id") Long userId ) {
-        return authService.deleteUser(userId);
+        try {
+            authService.deleteUser(userId);
+        } catch(ResourceNotFoundException e) {
+           System.out.println("Problem occur on Delete Function!");
+        }
+        return "redirect:/all_user";
     }
 
     @RequestMapping("/user_profile")
-    public String profile( @AuthenticationPrincipal MyUserDetails principal, Model model ) {
-        return authService.profile(principal, model);
+    public String profile( @AuthenticationPrincipal MyUserDetails principal, Model model) {
+        try{
+            User loggedUser = authService.profile(principal);
+            model.addAttribute("user", loggedUser);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return "home/profile";
     }
 
-    @RequestMapping("/edit/user/{id}")
-    public String editUserPage( @PathVariable(value="id") Long userId , Model model ) {
-        return authService.editUserPage(userId, model);
+    @RequestMapping(value="/edit/user/{id}", method = RequestMethod.GET)
+    public String setEditUserPage( @PathVariable(value="id") Long userId , Model model ) {
+
+        try {
+            User user = authService.setEditUserPage(userId);
+            model.addAttribute("user", user);
+            model.addAttribute("allRole" , roleDao.findAll());
+        } catch(ResourceNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "home/edit_user";
     }
 
-    @RequestMapping("/edit/user/{id}/submit")
+    @RequestMapping(value="/edit/user/{id}", method = RequestMethod.POST)
     public String editUserSubmit( @PathVariable(value="id") Long userId , User userDetails ) {
-       return authService.editUserSubmit(userId, userDetails);
+        try{
+            authService.editUserSubmit(userId, userDetails);
+        } catch(Exception e ) {
+            e.printStackTrace();
+        }
+        return "redirect:/all_user";
     }
-
 
 
 }

@@ -12,7 +12,7 @@
 <div class="container">
     <div class="card text-white bg-secondary mb-3">
 
-        <form class="form-container text-center" th:action="@{'/edit/user/' + ${user.id} + '/submit'}" th:object="${user}" method='POST'>
+        <form class="form-container text-center" th:action="@{'/edit/user/' + ${user.id}}" th:object="${user}" method='POST'>
 
                 <div class="form-group">
                     <label for="input_username">Username</label>
@@ -43,7 +43,6 @@
                 </div>
 
                 <button type="submit" class="btn btn-primary btn-block" style="width : 490px; margin-top:20px;" >Submit</button>
-
         </form>
 
     </div>
