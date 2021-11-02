@@ -15,7 +15,7 @@
 .review-profile-image-container{
     width: 30px;
     height: 30px;
-    margin-left: 5px;
+    margin: auto 5px;
 }
 
 .review-profile-image{
@@ -78,6 +78,23 @@
     border-radius: 15px;
 
     margin: 10px auto;
+
+    -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    -moz-box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
+}
+
+.review-writer-box{
+    width: 100%;
+    box-sizing: border-box;
+    background-color: antiquewhite;
+
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+
+    margin: 10px auto;
+    padding: 20px 20px;
 
     -webkit-box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
     -moz-box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;

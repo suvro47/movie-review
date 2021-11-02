@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
     <head>
         <title th:text="${movie.getName()}"></title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -8,13 +9,15 @@
     </head>
 
     <body>
+        <div th:insert="navbar :: navbar_head">...</div>
+        <div th:insert="navbar :: navbar_content">...</div>
+
         <section>
             <div class="container" th:each="review : ${reviews}">
                 <div class="review-box">
                     <div class="review-heading">
                         <div class="picture-name-container">
                             <div class="review-profile-image-container">
-                                <!--  -->
                                 <img th:src="${review.getUser().getProfilePicPath()}" class="review-profile-image" alt="User Image">
                             </div>
                             <div class="review-name-container">
@@ -35,6 +38,35 @@
                         <div th:text="${review.getMovieRating()}" class="review-stars"></div>
                         <p th:text="${review.getContent()}"></p>
                     </div>
+                </div>
+            </div>
+            <div sec:authorize="isAuthenticated()" class="container">
+                <div class="review-writer-box">
+                    <form th:action="@{'/movies/'+${movie.getId()}+'/review/new/'+${#authentication.principal.getId()}"
+                          th:object="${new_review}" method="post">
+                        <div class="form-group">
+                            <label for="movieRating">Select Rating</label>
+                            <select class="form-control" id="movieRating" th:field="*{movieRating}">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewContent">Detailed Review</label>
+                            <textarea class="form-control" id="reviewContent" rows="3" placeholder="Write a review..." th:field="*{content}"></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-primary" type="submit" value="Submit">Submit Review</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
