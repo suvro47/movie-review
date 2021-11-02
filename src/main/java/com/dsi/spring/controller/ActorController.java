@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/admin/actors")
@@ -30,14 +31,18 @@ public class ActorController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public String createActor(Actor actor) {
+    public String createActor(Actor actor, BindingResult result) {
+        if (result.hasErrors()) {
+            return "admin/movie/actor/actor_form";
+        }
         actorService.saveActor(actor);
         return "redirect:/admin/actors/";
     }
 
     // shows update form
-    @RequestMapping(value = "/edit/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public String updateActorForm(@PathVariable("id") long id, Model model) {
+
         try {
             Actor actor = actorService.getActorById(id);
             model.addAttribute("actorForm", actor);
@@ -49,7 +54,7 @@ public class ActorController {
         return "admin/movie/actor/actor_form";
     }
 
-    @RequestMapping(value = "/edit/{id}",method = RequestMethod.POST)
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)
     public String updateActor(@PathVariable("id") long id, @Validated Actor actor, BindingResult result, Model model) {
         if (result.hasErrors()) {
             actor.setId(id);
@@ -61,13 +66,13 @@ public class ActorController {
     }
 
     @RequestMapping(value = "/delete/{id}")
-    public String deleteActor(@PathVariable("id") long id, Model model) {
+    public String deleteActor(@PathVariable("id") long id, RedirectAttributes redirAttr) {
         try {
             Actor actor = actorService.getActorById(id);
             actorService.deleteActor(actor);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            redirAttr.addFlashAttribute("error", "Unable to delete cast assigned in a movie.");
+            return "redirect:/admin/actors/";
         }
 
         return "redirect:/admin/actors/";
