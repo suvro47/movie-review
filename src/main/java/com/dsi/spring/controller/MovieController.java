@@ -1,5 +1,6 @@
 package com.dsi.spring.controller;
 
+import java.text.DateFormat;
 import java.util.List;
 import com.dsi.spring.model.Actor;
 import com.dsi.spring.model.Movie;
@@ -29,6 +30,20 @@ public class MovieController {
         model.addAttribute("movies", movies);
 
         return "user/home";
+    }
+
+    @RequestMapping("/movies/{id}")
+    public String getMoviePreview(@PathVariable("id") long id, Model model){
+        try {
+            Movie movie = movieService.getMovieById(id);
+            model.addAttribute("movie", movie);
+            model.addAttribute("releaseDate", DateFormat.getDateInstance().format(movie.getReleaseDate()));
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return "admin/movie/movie_preview";
     }
 
     @RequestMapping("/admin/movies")
