@@ -46,14 +46,14 @@ public class AuthController {
         return "home/login";
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String signupPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
         return "home/signup";
     }
 
-    @RequestMapping(value="/signup", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signupSubmit(User user, Model model) {
         try {
             authService.signupSubmit(user);
@@ -69,55 +69,54 @@ public class AuthController {
         try {
             List<User> users = authService.allUser();
             model.addAttribute("allUser", users);
-        } catch (ResourceNotFoundException e ) {
+        } catch (ResourceNotFoundException e) {
             model.addAttribute("error", true);
         }
-        return "home/all_user";
+        return "admin/user/all_user";
     }
 
     @RequestMapping("/delete/user/{id}")
-    public String deleteUser( @PathVariable(value="id") Long userId ) {
+    public String deleteUser(@PathVariable(value = "id") Long userId) {
         try {
             authService.deleteUser(userId);
-        } catch(ResourceNotFoundException e) {
-           System.out.println("Problem occur on Delete Function!");
+        } catch (ResourceNotFoundException e) {
+            System.out.println("Problem occur on Delete Function!");
         }
         return "redirect:/all_user";
     }
 
     @RequestMapping("/user_profile")
-    public String profile( @AuthenticationPrincipal MyUserDetails principal, Model model) {
-        try{
+    public String profile(@AuthenticationPrincipal MyUserDetails principal, Model model) {
+        try {
             User loggedUser = authService.profile(principal);
             model.addAttribute("user", loggedUser);
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "home/profile";
     }
 
-    @RequestMapping(value="/edit/user/{id}", method = RequestMethod.GET)
-    public String setEditUserPage( @PathVariable(value="id") Long userId , Model model ) {
+    @RequestMapping(value = "/edit/user/{id}", method = RequestMethod.GET)
+    public String setEditUserPage(@PathVariable(value = "id") Long userId, Model model) {
 
         try {
             User user = authService.setEditUserPage(userId);
             model.addAttribute("user", user);
-            model.addAttribute("allRole" , roleDao.findAll());
-        } catch(ResourceNotFoundException e) {
+            model.addAttribute("allRole", roleDao.findAll());
+        } catch (ResourceNotFoundException e) {
             e.printStackTrace();
         }
-        return "home/edit_user";
+        return "admin/user/edit_user";
     }
 
-    @RequestMapping(value="/edit/user/{id}", method = RequestMethod.POST)
-    public String editUserSubmit( @PathVariable(value="id") Long userId , User userDetails ) {
-        try{
+    @RequestMapping(value = "/edit/user/{id}", method = RequestMethod.POST)
+    public String editUserSubmit(@PathVariable(value = "id") Long userId, User userDetails) {
+        try {
             authService.editUserSubmit(userId, userDetails);
-        } catch(Exception e ) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return "redirect:/all_user";
     }
-
 
 }
