@@ -36,6 +36,20 @@ public class MovieController {
         return "user/home";
     }
 
+    @RequestMapping("/movies/{id}")
+    public String getMoviePreview(@PathVariable("id") long id, Model model){
+        try {
+            Movie movie = movieService.getMovieById(id);
+            model.addAttribute("movie", movie);
+            model.addAttribute("new_review", new Review());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return "user/movie/movie_preview";
+    }
+
     @RequestMapping("/admin/movies")
     public String getMovies(Model model) {
         List<Movie> movies = movieService.getMovies();
@@ -98,20 +112,5 @@ public class MovieController {
         }
 
         return "redirect:/admin/movies/";
-    }
-
-    @GetMapping("/movies/{id}")
-    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
-        try {
-            Movie movie = movieService.getMovieById(id);
-            model.addAttribute("movie", movie);
-            model.addAttribute("reviews", movie.getReviews());
-            model.addAttribute("new_review", new Review());
-            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "user/movie/movie_preview";
     }
 }

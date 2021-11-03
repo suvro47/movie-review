@@ -40,13 +40,15 @@
       <div class="container">
         <div class="row">
           <div class="col" th:each="movie : ${movies}">
-            <button
+            <a
+              class="text-decoration-none"
               style="
                 padding: 5px;
                 margin: 5px;
                 border: none;
                 background-color: rgb(27, 27, 27);
               "
+              th:href="@{/movies/{id}(id=${movie.getId()})}"
             >
               <div
                 class="card"
@@ -83,7 +85,7 @@
                   th:text="${movie.releaseDate}"
                 ></p>
               </div>
-            </button>
+            </a>
           </div>
         </div>
       </div>
