@@ -30,10 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers("/", "/login", "/signup", "/images/**", "/css/**", "/js/**").permitAll().antMatchers("/x")
-                .hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN").antMatchers("/new/**")
-                .hasAnyAuthority("CREATOR", "ADMIN").antMatchers("/update/**").hasAnyAuthority("EDITOR", "ADMIN")
-                .antMatchers("/delete/**").hasAnyAuthority("Admin").anyRequest().authenticated().and().formLogin()
+                .antMatchers("/login", "/signup", "/signup-submit", "/images/**", "/css/**", "/js/**").permitAll()
+                .antMatchers("/", "/user_profile", "/all_user").hasAnyAuthority("USER", "ADMIN").antMatchers("/new/**")
+                .hasAnyAuthority("USER", "ADMIN").antMatchers("/edit/**").hasAnyAuthority("USER", "ADMIN")
+                .antMatchers("/delete/**").hasAnyAuthority("ADMIN").anyRequest().authenticated().and().formLogin()
                 .loginPage("/login").permitAll().failureUrl("/login-error").and().logout().invalidateHttpSession(true)
                 .clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/logout-success").permitAll();
