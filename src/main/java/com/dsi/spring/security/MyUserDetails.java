@@ -31,7 +31,7 @@ public class MyUserDetails implements UserDetails {
         return authorities;
     }
 
-    public Long getId(){
+    public Long getId() {
         return user.getId();
     }
 
