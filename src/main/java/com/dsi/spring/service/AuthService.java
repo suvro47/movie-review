@@ -4,7 +4,6 @@ import com.dsi.spring.exception.ResourceAlreadyExists;
 import com.dsi.spring.exception.ResourceNotFoundException;
 import com.dsi.spring.model.User;
 import com.dsi.spring.security.MyUserDetails;
-import org.springframework.ui.Model;
 
 import java.util.List;
 
@@ -20,6 +19,6 @@ public interface AuthService {
 
     User setEditUserPage(Long userId) throws ResourceNotFoundException;
 
-    void editUserSubmit( Long userId , User userDetails);
+    void editUserSubmit(Long userId, User userDetails);
 
 }

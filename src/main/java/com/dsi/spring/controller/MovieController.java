@@ -7,7 +7,6 @@ import com.dsi.spring.model.Review;
 import com.dsi.spring.service.ActorService;
 import com.dsi.spring.service.MovieService;
 
-import com.dsi.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,9 +23,6 @@ public class MovieController {
     @Autowired
     private ActorService actorService;
 
-    @Autowired
-    private ReviewService reviewService;
-
     @RequestMapping("/movies")
     public String getHomeMovies(Model model) {
 
@@ -37,7 +33,7 @@ public class MovieController {
     }
 
     @RequestMapping("/movies/{id}")
-    public String getMoviePreview(@PathVariable("id") long id, Model model){
+    public String getMoviePreview(@PathVariable("id") long id, Model model) {
         try {
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
