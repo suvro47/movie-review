@@ -6,6 +6,8 @@ import com.dsi.spring.model.Movie;
 import com.dsi.spring.model.Review;
 import com.dsi.spring.service.ActorService;
 import com.dsi.spring.service.MovieService;
+import com.dsi.spring.utility.FileUpload;
+import com.dsi.spring.utility.constants.ImageType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class MovieController {
@@ -62,12 +65,15 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/add", method = RequestMethod.POST)
-    public String addMovie(@Validated Movie movie, BindingResult result) {
+    public String addMovie(@Validated Movie movie, BindingResult result, MultipartFile file) {
 
         if (result.hasErrors()) {
             return "admin/movie/movie_form";
         }
         try {
+            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getId(), file);
+            System.out.println(path);
+            movie.setPoster(path);
             movieService.saveMovie(movie);
         } catch (Exception e) {
 

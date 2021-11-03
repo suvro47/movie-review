@@ -17,19 +17,21 @@ public class FileUploadController {
     private UserDao userDao;
 
     @RequestMapping("/edit/user/profile/image/{id}")
-    public String profilePictureUpdate(@PathVariable(value="id") Long id, @RequestParam("file") MultipartFile file ) {
+    public String profilePictureUpdate(@PathVariable(value = "id") Long id, @RequestParam("file") MultipartFile file) {
 
         try {
             User user = userDao.findById(id).orElse(new User());
-            String uploadDir = "src/main/resources/static/images/profile/"+ user.getUsername()+ "_" + id.toString() + "/";
-            String profilePicPath = "images/profile/"+ user.getUsername()+ "_" + id.toString()+ "/" + FileUploadUtil.saveFile(id, uploadDir, file);
+            String uploadDir = "src/main/resources/static/images/profile/" + user.getUsername() + "_" + id.toString()
+                    + "/";
+            String profilePicPath = "images/profile/" + user.getUsername() + "_" + id.toString() + "/"
+                    + FileUploadUtil.saveFile(id, uploadDir, file);
             System.out.println("File Uploaded Successfully : " + profilePicPath);
 
             user.setProfilePicPath(profilePicPath);
             userDao.save(user);
 
         } catch (Exception e) {
-            System.out.println("Excepton : " + e + " has occured.");
+            System.out.println("Exception : " + e + " has occured.");
         }
         return "redirect:/user_profile";
     }
