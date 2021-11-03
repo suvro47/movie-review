@@ -4,6 +4,7 @@
   <body style="background-color: rgb(27, 27, 27)">
     <div class="container">
       <nav th:replace="layouts :: main_navbar"></nav>
+      <br />
       <h1 align="center" style="color: white; font-weight: bold">
         Download YTS YIFY movies: HD smallest size
       </h1>
@@ -40,13 +41,15 @@
       <div class="container">
         <div class="row">
           <div class="col" th:each="movie : ${movies}">
-            <button
+            <a
+              class="text-decoration-none"
               style="
                 padding: 5px;
                 margin: 5px;
                 border: none;
                 background-color: rgb(27, 27, 27);
               "
+              th:href="@{/movies/{id}(id=${movie.getId()})}"
             >
               <div
                 class="card"
@@ -83,7 +86,7 @@
                   th:text="${movie.releaseDate}"
                 ></p>
               </div>
-            </button>
+            </a>
           </div>
         </div>
       </div>

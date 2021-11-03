@@ -7,6 +7,7 @@
       <div class="container">
         <div style="height: 20px"></div>
         <p align="center"><a href="/admin/actors/create">Add Cast</a></p>
+        <p th:if="${error}" th:text="${error}" class="alert alert-warning" role="alert" ></p>
       </div>
         <div>
           <table class="table">

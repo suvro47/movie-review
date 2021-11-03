@@ -36,10 +36,23 @@ public class MovieController {
         return "user/home";
     }
 
+    @RequestMapping("/movies/{id}")
+    public String getMoviePreview(@PathVariable("id") long id, Model model){
+        try {
+            Movie movie = movieService.getMovieById(id);
+            model.addAttribute("movie", movie);
+            model.addAttribute("new_review", new Review());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+        }
+
+        return "user/movie/movie_preview";
+    }
+
     @RequestMapping("/admin/movies")
     public String getMovies(Model model) {
         List<Movie> movies = movieService.getMovies();
-        System.out.println(movies.toString());
         model.addAttribute("movies", movies);
         return "admin/movie/movies";
     }
@@ -53,9 +66,18 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/add", method = RequestMethod.POST)
-    public String addMovie(Movie movie) {
+    public String addMovie(@Validated Movie movie, BindingResult result) {
 
-        movieService.saveMovie(movie);
+        if (result.hasErrors()) {
+            return "admin/movie/movie_form";
+        }
+        try {
+            movieService.saveMovie(movie);
+        } catch (Exception e) {
+
+            System.out.println(e);
+            return "admin/movie/movie_form";
+        }
         return "redirect:/admin/movies/";
     }
 
@@ -78,8 +100,9 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/movies/edit/{id}", method = RequestMethod.POST)
     public String updateMovie(@PathVariable("id") long id, @Validated Movie movie, BindingResult result, Model model) {
+
         if (result.hasErrors()) {
-            movie.setId(id);
+
             return "admin/movie/movie_form";
         }
 
@@ -98,20 +121,5 @@ public class MovieController {
         }
 
         return "redirect:/admin/movies/";
-    }
-
-    @GetMapping("/movies/{id}")
-    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
-        try {
-            Movie movie = movieService.getMovieById(id);
-            model.addAttribute("movie", movie);
-            model.addAttribute("reviews", movie.getReviews());
-            model.addAttribute("new_review", new Review());
-            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "user/movie/movie_preview";
     }
 }
