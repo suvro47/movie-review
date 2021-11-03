@@ -1,10 +1,10 @@
-package com.dsi.spring.service.impl;
+package com.dsi.spring.services.impl;
 
 import java.util.List;
 
 import com.dsi.spring.dao.ActorDao;
 import com.dsi.spring.model.Actor;
-import com.dsi.spring.service.ActorService;
+import com.dsi.spring.services.ActorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
