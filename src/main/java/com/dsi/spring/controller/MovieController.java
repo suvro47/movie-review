@@ -113,17 +113,4 @@ public class MovieController {
 
         return "redirect:/admin/movies/";
     }
-
-//    @GetMapping("/movies/{id}")
-//    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
-//        try {
-//            Movie movie = movieService.getMovieById(id);
-//            model.addAttribute("new_review", new Review());
-//            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "reviews";
-//    }
 }
