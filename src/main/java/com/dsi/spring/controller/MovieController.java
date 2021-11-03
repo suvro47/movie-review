@@ -100,7 +100,7 @@ public class MovieController {
         return "redirect:/admin/movies/";
     }
 
-    @GetMapping("/preview/{id}")
+    @GetMapping("/movies/{id}")
     public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
         try {
             Movie movie = movieService.getMovieById(id);
@@ -112,6 +112,6 @@ public class MovieController {
             e.printStackTrace();
         }
 
-        return "movie/movie_preview";
+        return "user/movie/movie_preview";
     }
 }
