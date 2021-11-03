@@ -1,7 +1,7 @@
 package com.dsi.spring.controller;
 
 import com.dsi.spring.model.Actor;
-import com.dsi.spring.services.ActorService;
+import com.dsi.spring.service.ActorService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

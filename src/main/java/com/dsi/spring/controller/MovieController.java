@@ -3,9 +3,11 @@ package com.dsi.spring.controller;
 import java.util.List;
 import com.dsi.spring.model.Actor;
 import com.dsi.spring.model.Movie;
-import com.dsi.spring.services.ActorService;
-import com.dsi.spring.services.MovieService;
+import com.dsi.spring.model.Review;
+import com.dsi.spring.service.ActorService;
+import com.dsi.spring.service.MovieService;
 
+import com.dsi.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +23,9 @@ public class MovieController {
 
     @Autowired
     private ActorService actorService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @RequestMapping("/movies")
     public String getHomeMovies(Model model) {
@@ -48,7 +53,7 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/movies/add", method = RequestMethod.POST)
     public String addMovie(@Validated Movie movie, BindingResult result) {
-        System.out.println(result);
+
         if (result.hasErrors()) {
             return "admin/movie/movie_form";
         }
@@ -102,5 +107,20 @@ public class MovieController {
         }
 
         return "redirect:/admin/movies/";
+    }
+
+    @GetMapping("/movies/{id}")
+    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
+        try {
+            Movie movie = movieService.getMovieById(id);
+            model.addAttribute("movie", movie);
+            model.addAttribute("reviews", movie.getReviews());
+            model.addAttribute("new_review", new Review());
+            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "user/movie/movie_preview";
     }
 }

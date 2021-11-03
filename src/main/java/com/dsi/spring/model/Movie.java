@@ -1,21 +1,11 @@
 package com.dsi.spring.model;
 
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.persistence.Temporal;
+import java.util.List;
+
+import javax.persistence.*;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -48,6 +38,9 @@ public class Movie {
 
     @Column(name = "poster", nullable = true, columnDefinition = "TEXT")
     private String poster;
+
+    @OneToMany(mappedBy = "movie")
+    private List<Review> reviews;
 
     @Column(name = "description", nullable = true, columnDefinition = "TEXT")
     private String description;
@@ -133,6 +126,13 @@ public class Movie {
 
     public void setActors(Set<Actor> actors) {
         this.actors = actors;
+    }
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 
     @Override
