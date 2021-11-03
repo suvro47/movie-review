@@ -7,6 +7,7 @@ import com.dsi.spring.model.Review;
 import com.dsi.spring.service.ActorService;
 import com.dsi.spring.service.MovieService;
 
+import com.dsi.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,9 @@ public class MovieController {
 
     @Autowired
     private ActorService actorService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/")
     public String getMovies(Model model) {
@@ -98,6 +102,7 @@ public class MovieController {
             model.addAttribute("movie", movie);
             model.addAttribute("reviews", movie.getReviews());
             model.addAttribute("new_review", new Review());
+            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -13,7 +13,7 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void saveNewReview(Review review) {
-
+        reviewdao.save(review);
     }
 
     @Override

@@ -26,8 +26,11 @@
                         </div>
                         <div class="review-date-delete">
                             <div class="review-date">
-                                <span>10/28/2021 5:34 PM</span>
+                                <span th:text="${review.getDateTimeString()}"></span>
                             </div>
+                            <a class="review-delete" th:if="${review.getUser().getId() == #authentication.getPrincipal().getId()}" th:href="@{'/movies/'+${movie.getId()}+'/review/edit/'+${review.reviewId}}">
+                                <span><i class="fa-solid fa-pen-to-square"></i></span>
+                            </a>
                             <a class="review-delete" th:href="@{'/movies/'+${movie.getId()}+'/review/delete/'+${review.reviewId}}">
                                 <span><i class="fa-solid fa-trash-can"></i></span>
                             </a>
@@ -35,14 +38,18 @@
                     </div>
                     <hr class="horizontal-line"/>
                     <div class="review-body">
-                        <div th:text="${review.getMovieRating()}" class="review-stars"></div>
+                        <div class="review-stars">
+                            <span><i style="color: orange;" class="fa-solid fa-star"></i></span>
+                            <span th:text="${review.getMovieRating()}" ></span>
+                            <span>/10</span>
+                        </div>
                         <p th:text="${review.getContent()}"></p>
                     </div>
                 </div>
             </div>
             <div sec:authorize="isAuthenticated()" class="container">
                 <div class="review-writer-box">
-                    <form th:action="@{'/movies/'+${movie.getId()}+'/review/new/'+${#authentication.principal.getId()}"
+                    <form th:action="@{'/movies/'+${movie.getId()}+'/review/new/'+${#authentication.getPrincipal().getId()}}"
                           th:object="${new_review}" method="post">
                         <div class="form-group">
                             <label for="movieRating">Select Rating</label>

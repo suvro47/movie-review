@@ -2,6 +2,10 @@ package com.dsi.spring.model;
 
 
 import javax.persistence.*;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Entity
@@ -12,6 +16,7 @@ public class Review {
         private Long reviewId;
         private String content;
         private Integer movieRating;
+        private Long dateTimeMilli;
         private Integer likes;
         @ElementCollection
         private List<String> comments;
@@ -74,7 +79,21 @@ public class Review {
                 return movie;
         }
 
+        public Long getDateTimeMilli() {
+                return dateTimeMilli;
+        }
+
+        public void setDateTimeMilli(Long dateTimeMilli) {
+                this.dateTimeMilli = dateTimeMilli;
+        }
+
         public void setMovie(Movie movie) {
                 this.movie = movie;
+        }
+
+        public String getDateTimeString(){
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+                LocalDateTime ldt = LocalDateTime.ofInstant(Instant.ofEpochMilli(getDateTimeMilli()), ZoneId.systemDefault());
+                return ldt.format(formatter);
         }
 }
