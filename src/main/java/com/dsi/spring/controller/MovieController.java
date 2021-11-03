@@ -37,13 +37,12 @@ public class MovieController {
         try {
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
-            model.addAttribute("releaseDate", DateFormat.getDateInstance().format(movie.getReleaseDate()));
         } catch (Exception e) {
 
             e.printStackTrace();
         }
 
-        return "admin/movie/movie_preview";
+        return "user/movie_preview";
     }
 
     @RequestMapping("/admin/movies")
