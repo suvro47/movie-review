@@ -1,4 +1,4 @@
-package com.dsi.spring.service;
+package com.dsi.spring.services;
 
 import java.util.List;
 

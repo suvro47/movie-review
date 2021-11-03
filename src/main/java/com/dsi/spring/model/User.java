@@ -21,7 +21,6 @@ public class User {
     private String email;
     private String profilePicPath;
 
-
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",

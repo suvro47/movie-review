@@ -43,41 +43,7 @@ body {
     margin : 0 10px;
 }
 
-.table {
-    margin : 20px auto;
-}
 
-.profile_card {
-    display : flex;
-    width : 50%;
-    margin : 20px auto;
-    justify-content : space-around;
-    align-items : center;
-    border : 1px black dotted;
-    padding : 35px 0;
-}
-
-.profile_card_image {
-    width : 160px;
-    height : 170px;
-    margin-bottom : 20px;
-}
-
-.info {
-    display : flex;
-    align-items : center;
-}
-
-.vertical_line {
-     width : 2px;
-     height : 250px;
-     background-color  : black;
-}
-
-.image_container {
-    display : flex;
-    flex-direction : column;
-}
 
 
 
