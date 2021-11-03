@@ -12,24 +12,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class FileUpload {
 
-    public static String saveImage(ImageType imageType, Long id, MultipartFile file) {
+    public static String saveImage(ImageType imageType, String name, MultipartFile file) {
 
-        Path uploadPath;
+        String staticPath = "src/main/resources/static/";
 
-        switch (imageType) {
-        case USER_PROFILE: {
-            uploadPath = Paths.get("src/main/resources/static/images/users/");
-        }
-        case MOVIE_POSTER: {
-            uploadPath = Paths.get("src/main/resources/static/images/movies/");
-        }
-        case CAST_DP: {
-            uploadPath = Paths.get("src/main/resources/static/images/casts/");
-        }
+        Path uploadPath = null;
 
-        default:
-            uploadPath = Paths.get("");
-        }
+        if (imageType == ImageType.CAST_DP) {
+            uploadPath = Paths.get(staticPath + "images/casts/");
+        } else if (imageType == ImageType.MOVIE_POSTER) {
+            uploadPath = Paths.get(staticPath + "images/movies/");
+        } else if (imageType == ImageType.USER_PROFILE)
+            uploadPath = Paths.get(staticPath + "images/users/");
 
         try {
             if (!Files.exists(uploadPath)) {
@@ -37,19 +31,19 @@ public class FileUpload {
             }
 
             String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
-            String newFileName = System.currentTimeMillis() + id + fileExtension;
+            String newFileName = System.currentTimeMillis() + "_" + name + fileExtension;
 
             Path filePath = uploadPath.resolve(newFileName);
 
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-            return uploadPath + "/" + newFileName;
+            return "~/" + uploadPath.toString().substring(staticPath.length()) + "/" + newFileName;
 
         } catch (IOException e) {
 
             e.printStackTrace();
         }
 
-        return "";
+        return null;
     }
 }
