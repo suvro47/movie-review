@@ -1,6 +1,5 @@
 package com.dsi.spring.controller;
 
-import java.text.DateFormat;
 import java.util.List;
 import com.dsi.spring.model.Actor;
 import com.dsi.spring.model.Movie;
@@ -42,12 +41,13 @@ public class MovieController {
         try {
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
+            model.addAttribute("new_review", new Review());
         } catch (Exception e) {
 
             e.printStackTrace();
         }
 
-        return "user/movie_preview";
+        return "user/movie/movie_preview";
     }
 
     @RequestMapping("/admin/movies")
@@ -114,18 +114,16 @@ public class MovieController {
         return "redirect:/admin/movies/";
     }
 
-    @GetMapping("/movies/{id}")
-    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
-        try {
-            Movie movie = movieService.getMovieById(id);
-            model.addAttribute("movie", movie);
-            model.addAttribute("reviews", movie.getReviews());
-            model.addAttribute("new_review", new Review());
-            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return "user/movie/movie_preview";
-    }
+//    @GetMapping("/movies/{id}")
+//    public String getSingleMovie(@PathVariable(value = "id") Long id, Model model) {
+//        try {
+//            Movie movie = movieService.getMovieById(id);
+//            model.addAttribute("new_review", new Review());
+//            model.addAttribute("update_review", reviewService.getSingleReview(Integer.toUnsignedLong(8)));
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//
+//        return "reviews";
+//    }
 }
