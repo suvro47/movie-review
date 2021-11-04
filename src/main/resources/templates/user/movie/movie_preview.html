@@ -24,12 +24,13 @@
 <section class="col-11 my-4 mx-auto p-2 bg-light rounded-lg container">
   <div class="d-flex">
     <div class="m-4 w-25">
-      <img class="rounded w-100 img-fluid" th:src="@{${movie.getPoster()}}" alt="Movie cover pic"/>
+      <img class="rounded w-100 img-fluid" th:src="@{${movie.getPoster()}}" th:alt="${movie.getName()}"/>
     </div>
     <div class="m-2 w-100 d-flex flex-column">
-      <h1 th:text="${movie.getName()}" class="mt-5 mb-4 px-2 font-weight-bold"></h1>
+      <h1 class="mt-5 mb-4 px-2 font-weight-bold " th:text="${movie.getName()}"></h1>
       <div class="px-3">
-        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getId()}"></span></h6>
+        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getRating()()}"></span></h6>
+
         <h6 class="my-0">Genre: <span class="font-weight-normal" th:text="${movie.getGenre()}"></span></h6>
         <h6 class="my-0">Release date: <span class="font-weight-normal" th:text="${movie.getReleaseDate()}"></span></h6>
       </div>

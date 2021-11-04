@@ -25,12 +25,20 @@
                 <td>
                   <img height="20px" width="20px" th:src="@{${movie.poster}}" />
                 </td>
-                <td th:text="${movie.name}"></td>
+                <td><a th:text="${movie.name}" th:href="@{/movies/{id}(id=${movie.getId()})}"></a></td>
                 <td th:text="${movie.genre}"></td>
                 <td th:text="${movie.releaseDate}"></td>
                 <td>
-                  <a class="btn btn-danger" th:href="@{/admin/movies/delete/{id}(id=${movie.id})}">Delete</a>
-                  <a class="btn btn-warning" th:href="@{/admin/movies/edit/{id}(id=${movie.id})}">Edit</a>
+                  <a
+                    class="btn btn-danger"
+                    th:href="@{/admin/movies/delete/{id}(id=${movie.id})}"
+                    >Delete</a
+                  >
+                  <a
+                    class="btn btn-warning"
+                    th:href="@{/admin/movies/edit/{id}(id=${movie.id})}"
+                    >Edit</a
+                  >
                 </td>
               </tr>
             </tbody>
