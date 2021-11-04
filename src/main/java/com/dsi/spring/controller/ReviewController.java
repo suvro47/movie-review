@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 @RequestMapping("/movies/{movie_id}/review")
 public class ReviewController {
@@ -37,9 +39,11 @@ public class ReviewController {
 
         @GetMapping("/edit/{review_id}")
         public String editReviewView(@PathVariable(value = "movie_id") Long movie_id,
-                        @PathVariable(value = "review_id") Long review_id, Model model) {
+                                     @PathVariable(value = "review_id") Long review_id, Model model, HttpSession session) {
                 try {
-                        model.addAttribute("review", reviewService.getSingleReview(review_id));
+                        Review review = reviewService.getSingleReview(review_id);
+                        session.setAttribute("session_review", review);
+                        model.addAttribute("review", review);
                         model.addAttribute("movie", movieService.getMovieById(movie_id));
                 } catch (Exception e) {
                         e.printStackTrace();
@@ -48,15 +52,13 @@ public class ReviewController {
         }
 
         @PostMapping("/edit/")
-        public String editReview(@PathVariable(value = "movie_id") Long movie_id, Review review) {
-
-                /*
-                 * Review review = reviewService.getSingleReview(review_id);
-                 * review.setContent(reviewInfo.getContent());
-                 * review.setComments(reviewInfo.getComments());
-                 * review.setLikes(reviewInfo.getLikes());
-                 * review.setMovieRating(reviewInfo.getMovieRating()); // review.setUser();
-                 */
+        public String editReview(@PathVariable(value = "movie_id") Long movie_id, @ModelAttribute("review") Review review, HttpSession session) {
+                Review temp_review = (Review) session.getAttribute("session_review");
+                review.setReviewId(temp_review.getReviewId());
+                review.setUser(temp_review.getUser());
+                review.setDateTimeMilli(temp_review.getDateTimeMilli());
+                review.setLikes(temp_review.getLikes());
+                review.setMovie(temp_review.getMovie());
 
                 reviewService.saveNewReview(review);
                 return "redirect:/movies/" + movie_id;

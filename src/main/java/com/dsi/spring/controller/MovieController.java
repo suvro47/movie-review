@@ -38,14 +38,13 @@ public class MovieController {
     @RequestMapping("/movies/{id}")
     public String getMoviePreview(@PathVariable("id") long id, Model model) {
         try {
+            //System.out.println("MOVIE ID: "+id);
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
             model.addAttribute("new_review", new Review());
         } catch (Exception e) {
-
             e.printStackTrace();
         }
-
         return "user/movie/movie_preview";
     }
 

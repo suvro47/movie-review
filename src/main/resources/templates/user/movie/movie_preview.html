@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <title th:text="${movie.getName()}"></title>
+  <title  th:text="${movie.getName()}"></title>
 
   <link
           rel="stylesheet"
@@ -28,7 +29,8 @@
     <div class="m-2 w-100 d-flex flex-column">
       <h1 class="mt-5 mb-4 px-2 font-weight-bold " th:text="${movie.getName()}"></h1>
       <div class="px-3">
-        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getName()}"></span></h6>
+        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getRating()()}"></span></h6>
+
         <h6 class="my-0">Genre: <span class="font-weight-normal" th:text="${movie.getGenre()}"></span></h6>
         <h6 class="my-0">Release date: <span class="font-weight-normal" th:text="${movie.getReleaseDate()}"></span></h6>
       </div>
