@@ -23,14 +23,14 @@
 <section class="col-11 my-4 mx-auto p-2 bg-light rounded-lg container">
   <div class="d-flex">
     <div class="m-4 w-25">
-      <img class="rounded w-100 img-fluid" th:src="@{${movie.getPoster()}}" alt="Movie cover pic"/>
+      <img class="rounded w-100 img-fluid" th:src="@{${movie.getPoster()}}" th:alt="${movie.getName()}"/>
     </div>
     <div class="m-2 w-100 d-flex flex-column">
-      <h1 class="mt-5 mb-4 px-2 font-weight-bold ">Dune</h1>
+      <h1 class="mt-5 mb-4 px-2 font-weight-bold " th:text="${movie.getName()}"></h1>
       <div class="px-3">
-        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getName()}">9.8</span></h6>
-        <h6 class="my-0">Genre: <span class="font-weight-normal" th:text="${movie.getGenre()}">Horror</span></h6>
-        <h6 class="my-0">Release date: <span class="font-weight-normal" th:text="${movie.getReleaseDate()}">19/02/21</span></h6>
+        <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getName()}"></span></h6>
+        <h6 class="my-0">Genre: <span class="font-weight-normal" th:text="${movie.getGenre()}"></span></h6>
+        <h6 class="my-0">Release date: <span class="font-weight-normal" th:text="${movie.getReleaseDate()}"></span></h6>
       </div>
       <div class="my-3 p-3 bg-white flex-grow-1 rounded-lg">
         <h6>Description:</h6>
