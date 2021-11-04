@@ -1,7 +1,6 @@
 package com.dsi.spring.controller;
 
 import com.dsi.spring.dao.UserDao;
-import com.dsi.spring.model.Movie;
 import com.dsi.spring.model.Review;
 import com.dsi.spring.service.MovieService;
 import com.dsi.spring.service.ReviewService;

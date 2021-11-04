@@ -6,14 +6,16 @@ import com.dsi.spring.model.Movie;
 import com.dsi.spring.model.Review;
 import com.dsi.spring.service.ActorService;
 import com.dsi.spring.service.MovieService;
+import com.dsi.spring.utility.FileUpload;
+import com.dsi.spring.utility.constants.ImageType;
 
-import com.dsi.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MovieController {
@@ -23,9 +25,6 @@ public class MovieController {
 
     @Autowired
     private ActorService actorService;
-
-    @Autowired
-    private ReviewService reviewService;
 
     @RequestMapping("/movies")
     public String getHomeMovies(Model model) {
@@ -37,7 +36,7 @@ public class MovieController {
     }
 
     @RequestMapping("/movies/{id}")
-    public String getMoviePreview(@PathVariable("id") long id, Model model){
+    public String getMoviePreview(@PathVariable("id") long id, Model model) {
         try {
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
@@ -66,16 +65,19 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/add", method = RequestMethod.POST)
-    public String addMovie(@Validated Movie movie, BindingResult result) {
+    public String addMovie(Movie movie, BindingResult result, @RequestParam(value = "file") MultipartFile file,
+            RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute(movie);
             return "admin/movie/movie_form";
         }
         try {
+            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
+            movie.setPoster(path);
             movieService.saveMovie(movie);
         } catch (Exception e) {
-
-            System.out.println(e);
+            redirectAttributes.addFlashAttribute(movie);
             return "admin/movie/movie_form";
         }
         return "redirect:/admin/movies/";
@@ -99,14 +101,21 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/edit/{id}", method = RequestMethod.POST)
-    public String updateMovie(@PathVariable("id") long id, @Validated Movie movie, BindingResult result, Model model) {
+    public String updateMovie(@PathVariable("id") long id, Movie movie, BindingResult result, Model model,
+            @RequestParam(value = "file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-
+            redirectAttributes.addFlashAttribute(model);
             return "admin/movie/movie_form";
         }
-
-        movieService.saveMovie(movie);
+        try {
+            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
+            movie.setPoster(path);
+            movieService.saveMovie(movie);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute(model);
+            return "admin/movie/movie_form";
+        }
         return "redirect:/admin/movies/";
     }
 
