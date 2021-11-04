@@ -23,10 +23,10 @@
 <section class="col-11 my-4 mx-auto p-2 bg-light rounded-lg container">
   <div class="d-flex">
     <div class="m-4 w-25">
-      <img class="rounded w-100 img-fluid" th:src="@{${movie.getPoster()}}" alt="Movie cover pic"/>
+      <img class="rounded w-100 img-fluid" th:src="@{/${movie.getPoster()}}" alt="Movie cover pic"/>
     </div>
     <div class="m-2 w-100 d-flex flex-column">
-      <h1 class="mt-5 mb-4 px-2 font-weight-bold ">Dune</h1>
+      <h1 class="mt-5 mb-4 px-2 font-weight-bold " th:text="${movie.getName()}"></h1>
       <div class="px-3">
         <h6 class="my-0">Rating: <span class="font-weight-normal" th:text="${movie.getName()}">9.8</span></h6>
         <h6 class="my-0">Genre: <span class="font-weight-normal" th:text="${movie.getGenre()}">Horror</span></h6>
@@ -38,21 +38,21 @@
       </div>
     </div>
   </div>
-  <div class="px-2">
-    <h5 class="mx-4 font-weight-bold">Cast:</h5>
-    <div class="bg-white rounded-lg p-2 overflow-auto text-nowrap">
-      <div class="swiper cast-swiper">
-        <div class="swiper-wrapper">
-          <div class="d-inline-block mx-4 swiper-slide" th:each="actor : ${movie.getActors()}">
-            <img class="rounded-circle mx-auto" style="width: 100px;height: 100px;" th:src="@{${actor.getImageUrl()}}" alt="Actor pic">
-            <p class="text-center d-inline-block mx-auto text-wrap" th:text="${actor.getName()}"></p>
-          </div>
-        </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-      </div>
-    </div>
-  </div>
+<!--  <div class="px-2">-->
+<!--    <h5 class="mx-4 font-weight-bold">Cast:</h5>-->
+<!--    <div class="bg-white rounded-lg p-2 overflow-auto text-nowrap">-->
+<!--      <div class="swiper cast-swiper">-->
+<!--        <div class="swiper-wrapper">-->
+<!--          <div class="d-inline-block mx-4 swiper-slide" th:each="actor : ${movie.getActors()}">-->
+<!--            <img class="rounded-circle mx-auto" style="width: 100px;height: 100px;" th:src="@{${actor.getImageUrl()}}" alt="Actor pic">-->
+<!--            <p class="text-center d-inline-block mx-auto text-wrap" th:text="${actor.getName()}"></p>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="swiper-button-next"></div>-->
+<!--        <div class="swiper-button-prev"></div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
 </section>
 
 <section th:replace="user/movie/review/reviews:: reviews"></section>
