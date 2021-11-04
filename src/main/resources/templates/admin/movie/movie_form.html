@@ -10,6 +10,7 @@
           th:object="${movieForm}"
           th:action="@{/admin/movies/{action}(action=${movieForm.id}?'edit/'+${movieForm.id}:'add')}"
           method="post"
+          enctype="multipart/form-data"
         >
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -49,15 +50,15 @@
             />
           </div>
           <div class="form-group">
-            <label for="poster">Poster Url</label>
-            <input
-              th:field="*{poster}"
-              type="text"
-              class="form-control"
-              id="poster"
-              value="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
-              placeholder="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+            <label for="poster">Poster</label>
+            <img
+              height="30px"
+              width="30px"
+              th:if="${movieForm.getPoster()}"
+              th:src="@{${movieForm.getPoster()}}"
             />
+            <br />
+            <input type="file" name="file"  />
           </div>
 
           <div class="form-group">
@@ -84,7 +85,6 @@
               id="description"
               rows="3"
             ></textarea>
-
           </div>
 
           <button
