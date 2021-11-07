@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-  <head th:replace="layouts :: head"> </head>
+  <head th:replace="navbar :: navbar_head"> </head>
   <body>
+  <div th:insert="navbar :: navbar_head">...</div>
+  <div th:insert="navbar :: navbar_content">...</div>
     <div class="container">
-      <nav th:replace="layouts :: admin_navbar"></nav>
       <div class="container">
         <div style="height: 20px"></div>
         <p align="center"><a href="/admin/movies/add">Add Movie</a></p>
