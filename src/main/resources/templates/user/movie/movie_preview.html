@@ -30,9 +30,9 @@
 
   <body style="background-color: black">
     <nav th:replace="layouts :: main_navbar"></nav>
-    <section class="col-11 my-4 mx-auto p-2 bg-dark rounded-lg container">
-      <div class="d-flex">
-        <div class="m-4 w-25">
+    <section class="my-4 mx-auto p-2 bg-dark rounded-lg container text-white-50">
+      <div class="d-flex align-items-stretch">
+        <div class="m-4 w-25 ">
           <img
             class="rounded w-100 img-fluid"
             th:src="@{${movie.getPoster()}}"
@@ -41,7 +41,7 @@
         </div>
         <div class="m-2 w-100 d-flex flex-column">
           <h1
-            class="mt-5 mb-4 px-2 font-weight-bold"
+            class="my-2 px-2 font-weight-bold text-white"
             th:text="${movie.getName()}"
           ></h1>
           <div class="px-3">
@@ -68,19 +68,19 @@
               ></span>
             </h6>
           </div>
-          <div class="my-3 p-3 bg-white flex-grow-1 rounded-lg">
-            <h6>Description:</h6>
-            <p class="my-0" th:text="${movie.getDescription()}"></p>
+          <div class="my-2 px-3 d-flex flex-column flex-grow-1">
+            <h6 class="my-1">Description:</h6>
+            <p class="my-0 rounded-lg px-2 py-1 bg-secondary text-white-50 text-black-50 flex-grow-1" th:text="${movie.getDescription()}"></p>
           </div>
         </div>
       </div>
       <div class="px-2">
         <h5 class="mx-4 font-weight-bold">Cast:</h5>
-        <div class="bg-white rounded-lg p-2 overflow-auto text-nowrap">
+        <div class="bg-secondary rounded-lg p-2 overflow-auto text-nowrap">
           <div class="swiper cast-swiper">
             <div class="swiper-wrapper">
               <div
-                class="d-inline-block mx-4 swiper-slide"
+                class="bg-transparent d-inline-block mx-4 swiper-slide"
                 th:each="actor : ${movie.getActors()}"
               >
                 <img
@@ -90,13 +90,13 @@
                   alt="Actor pic"
                 />
                 <p
-                  class="text-center d-inline-block mx-auto text-wrap"
+                  class="text-center  d-inline-block mx-auto my-1 text-wrap"
                   th:text="${actor.getName()}"
                 ></p>
               </div>
             </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next text-white-50"></div>
+            <div class="swiper-button-prev text-white-50"></div>
           </div>
         </div>
       </div>

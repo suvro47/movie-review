@@ -27,7 +27,7 @@ public class AuthController {
 
     @RequestMapping("/")
     public String home() {
-        return "index";
+        return "redirect:/movies";
     }
 
     @RequestMapping("/login")
