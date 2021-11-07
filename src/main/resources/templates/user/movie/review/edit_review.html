@@ -18,52 +18,15 @@
     </head>
 
     <body>
-        <!-- <div th:insert="navbar :: navbar_head">...</div> -->
-        <!-- <div th:insert="navbar :: navbar_content">...</div> -->
         <nav th:replace="layouts :: main_navbar"></nav>
 
         <h1 style="text-align: center;">Edit Your Review</h1>
         <section>
-            <!-- <div sec:authorize="isAuthenticated()" class="container">
-                <div class="review-writer-box">
-                    <form th:action="@{'/movies/'+${movie.getId()}+'/review/edit/'}"
-                          th:object="${review}" th:method="${'post'}">
-                        <div class="form-group">
-                            <label for="movieRating">Select Rating</label>
-                            <select class="form-control" id="movieRating" th:field="*{movieRating}">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                                <option value="10">10</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="reviewContent">Detailed Review</label>
-                            <textarea class="form-control" id="reviewContent" rows="3" placeholder="Write a review..." th:field="*{content}"></textarea>
-                        </div>
-                        <input type="hidden" th:field="*{movie}" th:value="${movie}">
-                        <input type="hidden" th:field="*{user}" th:value="${review.getUser()}">
-                        <input type="hidden" th:field="*{dateTimeMilli}" th:value="${review.getDateTimeMilli()}">
-                        <input type="hidden" th:field="*{likes}" th:value="${review.getLikes()}">
-                        <input type="hidden" th:field="*{reviewId}" th:value="${review.getReviewId()}">
-                        <div class="text-center">
-                            <button class="btn btn-primary" type="submit" value="Submit">Update Review</button>
-                        </div>
-                    </form>
-                </div>
-            </div> -->
-
             <div sec:authorize="isAuthenticated()" class="container">
                 <div class="review-writer-box">
                     <form th:action="@{'/movies/'+${movie.getId()}+'/review/edit/'}"
                           th:object="${review}" method="post">
-                        <div class="row" >
+                        <div class="row">
                             <div class="col-2">
                                 <label for="movieRating">Select Rating</label>
                                 <select class="form-control" id="movieRating" th:field="*{movieRating}">
