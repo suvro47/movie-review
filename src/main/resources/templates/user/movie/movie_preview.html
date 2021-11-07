@@ -13,6 +13,8 @@
           rel="stylesheet"
           href="https://unpkg.com/swiper/swiper-bundle.min.css"
   />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" th:href="@{/css/style.css}">
   <link rel="stylesheet" th:href="@{/css/review.css}">
@@ -35,6 +37,22 @@
       <div class="my-3 p-3 bg-white flex-grow-1 rounded-lg">
         <h6>Description:</h6>
         <p class="my-0" th:text="${movie.getDescription()}"></p>
+        <span><br/></span>
+
+        <div class="row">
+          <div class="col">
+            <span class="material-icons">favorite_border</span>
+          </div>
+          <div class="col" style="text-align: right">
+              <span th:if="${movie.isUserAvailableInMovieWatchlist(#authentication.getPrincipal().id)}">
+                <a th:href="@{/movies/{id}/remove-from-watchlist (id=${movie.id})}" style="color: orange"><span class="material-icons">turned_in</span></a>
+              </span>
+            <span th:unless="${movie.isUserAvailableInMovieWatchlist(#authentication.getPrincipal().id)}">
+                <a th:href="@{/movies/{id}/add-to-watchlist (id=${movie.id})}"><span class="material-icons">bookmark_border</span></a>
+              </span>
+          </div>
+        </div>
+      </div>
       </div>
     </div>
   </div>

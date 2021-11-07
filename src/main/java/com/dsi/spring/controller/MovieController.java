@@ -1,14 +1,21 @@
 package com.dsi.spring.controller;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
+import com.dsi.spring.dao.UserDao;
 import com.dsi.spring.model.Actor;
 import com.dsi.spring.model.Movie;
 import com.dsi.spring.model.Review;
+import com.dsi.spring.model.User;
+import com.dsi.spring.security.MyUserDetails;
 import com.dsi.spring.service.ActorService;
+import com.dsi.spring.service.AuthService;
 import com.dsi.spring.service.MovieService;
 
-import com.dsi.spring.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,14 +32,15 @@ public class MovieController {
     private ActorService actorService;
 
     @Autowired
-    private ReviewService reviewService;
+    private UserDao userService;
+
+    @Autowired
+    private AuthService authService;
 
     @RequestMapping("/movies")
     public String getHomeMovies(Model model) {
-
         List<Movie> movies = movieService.getMovies();
         model.addAttribute("movies", movies);
-
         return "user/home";
     }
 
@@ -122,4 +130,61 @@ public class MovieController {
 
         return "redirect:/admin/movies/";
     }
+
+    @RequestMapping(value = "/movies/{movie_id}/add-to-watchlist", method = RequestMethod.GET)
+    public String addMovieToWatchlist(@AuthenticationPrincipal MyUserDetails principal, @PathVariable("movie_id") long movieId) {
+        try {
+            Movie movie = movieService.getMovieById(movieId);
+            User user = authService.profile(principal);
+            user.addMovieToWatchlist(movie);
+            userService.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/watch-listed-movies";
+    }
+
+    @RequestMapping(value = "/movies/{movie_id}/remove-from-watchlist", method = RequestMethod.GET)
+    public String removeMovieFromWatchlist(@AuthenticationPrincipal MyUserDetails principal, @PathVariable("movie_id") long movieId) {
+        try {
+            Movie movie = movieService.getMovieById(movieId);
+            User user = authService.profile(principal);
+            user.removeMovieFromWatchlist(movie.getId());
+            userService.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/watch-listed-movies";
+    }
+
+    @RequestMapping(value = "/movies/watch-listed-movies/clear-all", method = RequestMethod.GET)
+    public String clearWatchList(@AuthenticationPrincipal MyUserDetails principal, Model model){
+        try {
+            User user = authService.profile(principal);
+            user.setWatchListedMovies(new HashSet<>());
+            userService.save(user);
+            Set<Movie> movies = user.getWatchListedMovies();
+            model.addAttribute("movies",movies);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/watch-listed-movies";
+    }
+
+    @RequestMapping(value = "/movies/watch-listed-movies", method = RequestMethod.GET)
+    public String showWatchListedMovies(@AuthenticationPrincipal MyUserDetails principal, Model model){
+        try {
+            User user = authService.profile(principal);
+            Set<Movie> movies = user.getWatchListedMovies();
+            model.addAttribute("movies",movies);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "watchlist";
+    }
+
+
+
+
+
 }
