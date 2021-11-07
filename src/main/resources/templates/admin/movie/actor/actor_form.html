@@ -10,6 +10,7 @@
           th:object="${actorForm}"
           th:action="@{/admin/actors/{action}(action=${actorForm.id}?'edit/'+${actorForm.id}:'create')}"
           method="post"
+          enctype="multipart/form-data"
         >
           <div class="mb-3">
             <label for="formGroupExampleInput" class="form-label"
@@ -26,20 +27,23 @@
           </div>
           <div class="mb-3">
             <label for="formGroupExampleInput2" class="form-label"
-              >Cast Image Url</label
+              >Cast Profile Pic</label
             >
-            <input
-              th:field="*{imageUrl}"
-              name="imageUrl"
-              type="text"
-              class="form-control"
-              placeholder="Image Url"
-              aria-label="Image Url"
+            <img
+              height="30px"
+              width="30px"
+              th:if="${actorForm.getImageUrl()}"
+              th:src="@{${actorForm.getImageUrl()}}"
             />
+            <br />
+            <input type="file" name="file" />
           </div>
 
-          <button class="btn btn-primary text-center" type="submit" th:text="(${actorForm.id}?'Update':'Create')">
-          </button>
+          <button
+            class="btn btn-primary text-center"
+            type="submit"
+            th:text="(${actorForm.id}?'Update':'Create')"
+          ></button>
         </form>
       </div>
     </div>

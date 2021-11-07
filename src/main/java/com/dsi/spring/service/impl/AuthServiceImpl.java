@@ -26,9 +26,9 @@ public class AuthServiceImpl implements AuthService {
     private RoleDao roleDao;
 
     @Override
-    public void signupSubmit(User user) throws  ResourceAlreadyExists {
+    public void signupSubmit(User user) throws ResourceAlreadyExists {
 
-        if( userDao.findByUsername(user.getUsername()) != null )
+        if (userDao.findByUsername(user.getUsername()) != null)
             throw new ResourceAlreadyExists("Username Already exists");
 
         // default role set as user
@@ -39,37 +39,36 @@ public class AuthServiceImpl implements AuthService {
         user.setProfilePicPath("/images/profile/default.png");
 
         user.setEnabled(true);
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));  // password encrypted
-        User savedUser = userDao.save(user);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword())); // password encrypted
+        userDao.save(user);
     }
 
     @Override
     public List<User> allUser() throws ResourceNotFoundException {
         List<User> users = userDao.findAllUser();
-        if( users.isEmpty() ) throw new ResourceNotFoundException("No User found");
+        if (users.isEmpty())
+            throw new ResourceNotFoundException("No User found");
         return users;
     }
 
     @Override
     public void deleteUser(Long userId) throws ResourceNotFoundException {
 
-        User user = userDao.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        userDao.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         userDao.deleteById(userId);
     }
 
     @Override
     public User profile(MyUserDetails principal) {
-        User user = userDao.findById(principal.getId()).orElse( new User());
+        User user = userDao.findById(principal.getId()).orElse(new User());
         return user;
     }
 
     @Override
     public User setEditUserPage(Long userId) throws ResourceNotFoundException {
 
-        User user = userDao.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        User user = userDao.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
         return user;
     }
@@ -77,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void editUserSubmit(Long userId, User userDetails) {
 
-        User user = userDao.findById(userId).orElse( new User());
+        User user = userDao.findById(userId).orElse(new User());
         user.setUsername(userDetails.getUsername());
         user.setFirstName(userDetails.getFirstName());
         user.setLastName(userDetails.getLastName());
@@ -85,6 +84,5 @@ public class AuthServiceImpl implements AuthService {
         user.setRoles(userDetails.getRoles());
         userDao.save(user);
     }
-
 
 }

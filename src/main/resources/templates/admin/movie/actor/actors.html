@@ -22,7 +22,7 @@
             <tbody>
               <tr th:each="actor : ${actors}">
                 <td th:text="${actor.id}"></td>
-                <td><img height="20px" width="20px"  th:src="@{${actor.imageUrl}}"/></td>
+                <td><img height="20px" width="20px"  th:src="@{${actor.imageUrl}}" /></td>
                 <td th:text="${actor.name}"></td>
                 <td>
                   <a class="btn btn-danger" th:href="@{/admin/actors/delete/{id}(id=${actor.id})}">Delete</a>
