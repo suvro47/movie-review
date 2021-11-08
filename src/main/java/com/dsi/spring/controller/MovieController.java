@@ -113,7 +113,7 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/movies/edit/{id}", method = RequestMethod.POST)
     public String updateMovie(@PathVariable("id") long id, Movie movie, BindingResult result, Model model,
-            @RequestParam(value = "file",required = false) MultipartFile file, RedirectAttributes redirectAttributes) {
+                              @RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes) {
 
 
         if (result.hasErrors()) {
@@ -121,11 +121,10 @@ public class MovieController {
             return "admin/movie/movie_form";
         }
         try {
-            if (!file.isEmpty()){
+            if (!file.isEmpty()) {
                 String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
                 movie.setPoster(path);
-            }
-            else {
+            } else {
                 movie.setPoster(movieService.getMovieById(id).getPoster());
             }
             movieService.saveMovie(movie);
@@ -201,5 +200,57 @@ public class MovieController {
         return "watchlist";
     }
 
+    @RequestMapping(value = "/movies/{movie_id}/add-to-favourite", method = RequestMethod.GET)
+    public String addMovieToFavourite(@AuthenticationPrincipal MyUserDetails principal, @PathVariable("movie_id") long movieId) {
+        try {
+            Movie movie = movieService.getMovieById(movieId);
+            User user = authService.profile(principal);
+            user.addMovieToFavourite(movie);
+            userService.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/favourite-movies";
+    }
+
+
+    @RequestMapping(value = "/movies/{movie_id}/remove-from-favourite", method = RequestMethod.GET)
+    public String removeMovieFromFavourite(@AuthenticationPrincipal MyUserDetails principal, @PathVariable("movie_id") long movieId) {
+        try {
+            Movie movie = movieService.getMovieById(movieId);
+            User user = authService.profile(principal);
+            user.removeMovieFromFavourite(movie.getId());
+            userService.save(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/favourite-movies";
+    }
+
+    @RequestMapping(value = "/movies/favourite-movies/clear-all", method = RequestMethod.GET)
+    public String clearFavouriteMovies(@AuthenticationPrincipal MyUserDetails principal, Model model) {
+        try {
+            User user = authService.profile(principal);
+            user.setFavouriteMovies(new HashSet<>());
+            userService.save(user);
+            Set<Movie> movies = user.getWatchListedMovies();
+            model.addAttribute("movies", movies);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "redirect:/movies/favourite-movies";
+    }
+
+    @RequestMapping(value = "/movies/favourite-movies", method = RequestMethod.GET)
+    public String showFavouriteMovies(@AuthenticationPrincipal MyUserDetails principal, Model model) {
+        try {
+            User user = authService.profile(principal);
+            Set<Movie> movies = user.getFavouriteMovies();
+            model.addAttribute("movies", movies);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "favourite";
+    }
 
 }
