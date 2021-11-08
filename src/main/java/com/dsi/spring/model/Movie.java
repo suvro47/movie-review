@@ -1,11 +1,8 @@
 package com.dsi.spring.model;
 
-import java.util.Date;
-
-import java.util.List;
+import java.util.*;
 
 import javax.persistence.*;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,11 +47,16 @@ public class Movie {
             @JoinColumn(name = "actor_id") })
     private Set<Actor> actors;
 
+    @ManyToMany(mappedBy = "watchListedMovies")
+    private Set<User> watchlistUsers = new HashSet<>();
+
+
+
     public Movie() {
     }
 
     public Movie(String name, Date releaseDate, Double rating, String genre, String poster, String description,
-            Set<Actor> actors) {
+            Set<Actor> actors,Set<User>watchlistUsers) {
         this.name = name;
         this.releaseDate = releaseDate;
         this.rating = rating;
@@ -134,6 +136,26 @@ public class Movie {
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
     }
+
+
+    public Set<User> getWatchlistUsers() {
+        return watchlistUsers;
+    }
+    public void setWatchlistUsers(Set<User> watchlistUsers) {
+        this.watchlistUsers = watchlistUsers;
+    }
+    public void addUserToWatchListedMovie(User user) { watchlistUsers.add(user); }
+    public boolean isUserAvailableInMovieWatchlist(Long user_id){
+        Set<User>watchlistUser = this.getWatchlistUsers();
+        for(User user:watchlistUser){
+            if(user.getId() == user_id)
+                return true;
+        }
+        return false;
+    }
+
+
+
 
     @Override
     public String toString() {

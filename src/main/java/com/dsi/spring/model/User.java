@@ -1,7 +1,9 @@
 package com.dsi.spring.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,6 +31,32 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_movie_watchlist",
+            joinColumns = @JoinColumn(name = "user_id",referencedColumnName = "user_id") ,
+            inverseJoinColumns = @JoinColumn(name="movie_id",referencedColumnName = "id")
+    )
+    private Set<Movie> watchListedMovies = new HashSet<>();
+
+    public Set<Movie> getWatchListedMovies() {
+        return watchListedMovies;
+    }
+    public void setWatchListedMovies(Set<Movie> watchListedMovies) {
+        this.watchListedMovies = watchListedMovies;
+    }
+    public void addMovieToWatchlist(Movie movie) { watchListedMovies.add(movie); }
+    public void removeMovieFromWatchlist(Long movie_id) {
+        Set<Movie>movies = this.getWatchListedMovies();
+        for(Movie movie: movies){
+            if(movie.getId()==movie_id){
+                movies.remove(movie);
+                return;
+            }
+        }
+    }
+
 
     public Long getId() {
         return id;
