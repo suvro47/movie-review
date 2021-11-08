@@ -113,15 +113,21 @@ public class MovieController {
 
     @RequestMapping(value = "/admin/movies/edit/{id}", method = RequestMethod.POST)
     public String updateMovie(@PathVariable("id") long id, Movie movie, BindingResult result, Model model,
-                              @RequestParam(value = "file") MultipartFile file, RedirectAttributes redirectAttributes) {
+            @RequestParam(value = "file",required = false) MultipartFile file, RedirectAttributes redirectAttributes) {
+
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute(model);
             return "admin/movie/movie_form";
         }
         try {
-            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
-            movie.setPoster(path);
+            if (!file.isEmpty()){
+                String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
+                movie.setPoster(path);
+            }
+            else {
+                movie.setPoster(movieService.getMovieById(id).getPoster());
+            }
             movieService.saveMovie(movie);
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute(model);
