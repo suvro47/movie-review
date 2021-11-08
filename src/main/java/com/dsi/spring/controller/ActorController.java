@@ -77,8 +77,13 @@ public class ActorController {
         }
 
         try {
-            String path = FileUpload.saveImage(ImageType.CAST_DP, actor.getName(), file);
-            actor.setImageUrl(path);
+            if (!file.isEmpty()){
+                String path = FileUpload.saveImage(ImageType.CAST_DP, actor.getName(), file);
+                actor.setImageUrl(path);
+            }
+            else {
+                actor.setImageUrl(actorService.getActorById(id).getImageUrl());
+            }
             actorService.saveActor(actor);
 
         } catch (Exception e) {
