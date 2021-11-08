@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -119,6 +121,16 @@ public class AuthController {
         return "redirect:/all_user";
     }
 
+    @RequestMapping("/edit/user/profile/image/{id}")
+    public String profilePictureUpdate(@PathVariable(value = "id") Long id, @RequestParam("file") MultipartFile file) {
 
+        try {
+            authService.saveUpdatedProfilePicture(id, file);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+        return "redirect:/user_profile";
+    }
 }
+
