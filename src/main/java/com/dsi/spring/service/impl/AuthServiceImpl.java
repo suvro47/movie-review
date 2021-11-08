@@ -11,6 +11,9 @@ import com.dsi.spring.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import com.dsi.spring.utility.FileUpload;
+import com.dsi.spring.utility.constants.ImageType;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
 import java.util.List;
@@ -82,6 +85,14 @@ public class AuthServiceImpl implements AuthService {
         user.setLastName(userDetails.getLastName());
         user.setEmail(userDetails.getEmail());
         user.setRoles(userDetails.getRoles());
+        userDao.save(user);
+    }
+
+    @Override
+    public void saveUpdatedProfilePicture(Long userId, MultipartFile file) throws ResourceNotFoundException {
+        User user = userDao.findById(userId).orElseThrow(() -> new ResourceNotFoundException("User not found"));
+        String path = FileUpload.saveImage(ImageType.USER_PROFILE, user.getUsername(), file);
+        user.setProfilePicPath(path);
         userDao.save(user);
     }
 
