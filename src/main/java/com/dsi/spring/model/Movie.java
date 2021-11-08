@@ -50,6 +50,9 @@ public class Movie {
     @ManyToMany(mappedBy = "watchListedMovies")
     private Set<User> watchlistUsers = new HashSet<>();
 
+    @ManyToMany(mappedBy = "favouriteMovies")
+    private Set<User> favouriteMovieUsers = new HashSet<>();
+
 
 
     public Movie() {
@@ -148,6 +151,20 @@ public class Movie {
     public boolean isUserAvailableInMovieWatchlist(Long user_id){
         Set<User>watchlistUser = this.getWatchlistUsers();
         for(User user:watchlistUser){
+            if(user.getId() == user_id)
+                return true;
+        }
+        return false;
+    }
+
+    public Set<User> getFavouriteMovieUsers() {
+        return favouriteMovieUsers;
+    }
+    public void setFavouriteMovieUsers(Set<User> favouriteMovieUsers) { this.favouriteMovieUsers = favouriteMovieUsers; }
+    public void addUserToFavouriteMovie(User user) { favouriteMovieUsers.add(user); }
+    public boolean isUserAvailableInFavouriteMovie(Long user_id){
+        Set<User>favouriteMovieUsers = this.getFavouriteMovieUsers();
+        for(User user:favouriteMovieUsers){
             if(user.getId() == user_id)
                 return true;
         }

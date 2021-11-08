@@ -41,7 +41,13 @@
 
         <div class="row">
           <div class="col">
-            <span class="material-icons">favorite_border</span>
+            <span th:if="${movie.isUserAvailableInFavouriteMovie(#authentication.getPrincipal().id)}">
+                        <a th:href="@{/movies/{id}/remove-from-favourite (id=${movie.id})}" style="color: darkred"><span
+                                class="material-icons">favorite</span></a>
+                      </span>
+            <span th:unless="${movie.isUserAvailableInFavouriteMovie(#authentication.getPrincipal().id)}">
+                        <a th:href="@{/movies/{id}/add-to-favourite (id=${movie.id})}" style="color: darkred"><span class="material-icons">favorite_border</span></a>
+                      </span>
           </div>
           <div class="col" style="text-align: right">
               <span th:if="${movie.isUserAvailableInMovieWatchlist(#authentication.getPrincipal().id)}">
