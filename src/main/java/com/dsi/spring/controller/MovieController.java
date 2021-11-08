@@ -13,14 +13,17 @@ import com.dsi.spring.security.MyUserDetails;
 import com.dsi.spring.service.ActorService;
 import com.dsi.spring.service.AuthService;
 import com.dsi.spring.service.MovieService;
+import com.dsi.spring.utility.FileUpload;
+import com.dsi.spring.utility.constants.ImageType;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class MovieController {
@@ -45,16 +48,15 @@ public class MovieController {
     }
 
     @RequestMapping("/movies/{id}")
-    public String getMoviePreview(@PathVariable("id") long id, Model model){
+    public String getMoviePreview(@PathVariable("id") long id, Model model) {
         try {
+            //System.out.println("MOVIE ID: "+id);
             Movie movie = movieService.getMovieById(id);
             model.addAttribute("movie", movie);
             model.addAttribute("new_review", new Review());
         } catch (Exception e) {
-
             e.printStackTrace();
         }
-
         return "user/movie/movie_preview";
     }
 
@@ -74,16 +76,19 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/add", method = RequestMethod.POST)
-    public String addMovie(@Validated Movie movie, BindingResult result) {
+    public String addMovie(Movie movie, BindingResult result, @RequestParam(value = "file") MultipartFile file,
+                           RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute(movie);
             return "admin/movie/movie_form";
         }
         try {
+            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
+            movie.setPoster(path);
             movieService.saveMovie(movie);
         } catch (Exception e) {
-
-            System.out.println(e);
+            redirectAttributes.addFlashAttribute(movie);
             return "admin/movie/movie_form";
         }
         return "redirect:/admin/movies/";
@@ -107,14 +112,21 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/admin/movies/edit/{id}", method = RequestMethod.POST)
-    public String updateMovie(@PathVariable("id") long id, @Validated Movie movie, BindingResult result, Model model) {
+    public String updateMovie(@PathVariable("id") long id, Movie movie, BindingResult result, Model model,
+                              @RequestParam(value = "file") MultipartFile file, RedirectAttributes redirectAttributes) {
 
         if (result.hasErrors()) {
-
+            redirectAttributes.addFlashAttribute(model);
             return "admin/movie/movie_form";
         }
-
-        movieService.saveMovie(movie);
+        try {
+            String path = FileUpload.saveImage(ImageType.MOVIE_POSTER, movie.getName(), file);
+            movie.setPoster(path);
+            movieService.saveMovie(movie);
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute(model);
+            return "admin/movie/movie_form";
+        }
         return "redirect:/admin/movies/";
     }
 
@@ -158,13 +170,13 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/movies/watch-listed-movies/clear-all", method = RequestMethod.GET)
-    public String clearWatchList(@AuthenticationPrincipal MyUserDetails principal, Model model){
+    public String clearWatchList(@AuthenticationPrincipal MyUserDetails principal, Model model) {
         try {
             User user = authService.profile(principal);
             user.setWatchListedMovies(new HashSet<>());
             userService.save(user);
             Set<Movie> movies = user.getWatchListedMovies();
-            model.addAttribute("movies",movies);
+            model.addAttribute("movies", movies);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -172,19 +184,16 @@ public class MovieController {
     }
 
     @RequestMapping(value = "/movies/watch-listed-movies", method = RequestMethod.GET)
-    public String showWatchListedMovies(@AuthenticationPrincipal MyUserDetails principal, Model model){
+    public String showWatchListedMovies(@AuthenticationPrincipal MyUserDetails principal, Model model) {
         try {
             User user = authService.profile(principal);
             Set<Movie> movies = user.getWatchListedMovies();
-            model.addAttribute("movies",movies);
+            model.addAttribute("movies", movies);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "watchlist";
     }
-
-
-
 
 
 }
