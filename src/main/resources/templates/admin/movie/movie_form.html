@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head th:replace="layouts :: head"> </head>
+  <body>
+    <div class="container">
+      <nav th:replace="layouts :: admin_navbar"></nav>
+      <div class="container">
+        <h1 align="center">Add a New Movie</h1>
+        <form
+          th:object="${movieForm}"
+          th:action="@{/admin/movies/{action}(action=${movieForm.id}?'edit/'+${movieForm.id}:'add')}"
+          method="post"
+        >
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="name">Name</label>
+              <input
+                th:field="*{name}"
+                name="name"
+                type="text"
+                class="form-control"
+                id="inputEmail4"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="release_date">Release Date</label>
+              <input
+                name="release_date"
+                th:field="*{releaseDate}"
+                value="${releaseDate}"
+                type="date"
+                class="form-control"
+                id="release_date"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="genre">Genre</label>
+            <input
+              name="genre"
+              th:field="*{genre}"
+              type="text"
+              class="form-control"
+              id="genre"
+              placeholder="Horror"
+            />
+          </div>
+          <div class="form-group">
+            <label for="poster">Poster Url</label>
+            <input
+              th:field="*{poster}"
+              type="text"
+              class="form-control"
+              id="poster"
+              value="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+              placeholder="https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="actors">Casts</label>
+            <select
+              th:field="*{actors}"
+              id="actors"
+              class="form-control"
+              multiple="multiple"
+            >
+              <option
+                th:each="actor : ${actors}"
+                th:text="${actor.name}"
+                th:value="${actor.id}"
+              ></option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" rows="3"></textarea>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary"
+            th:text="(${movieForm.id}?'Update':'Add')"
+          >
+            Add
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
