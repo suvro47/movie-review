@@ -23,20 +23,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationProvider authProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(new BCryptPasswordEncoder()); // encrypted password
+        provider.setPasswordEncoder(new BCryptPasswordEncoder());  // encrypted password
         return provider;
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {  
-        http.csrf().disable().authorizeRequests()
-                .antMatchers("/", "/login", "/signup", "/images/**", "/css/**", "/js/**").permitAll().antMatchers("/")
-                .hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN").antMatchers("/new/**")
-                .hasAnyAuthority("CREATOR", "ADMIN").antMatchers("/update/**").hasAnyAuthority("EDITOR", "ADMIN")
-                .antMatchers("/delete/**").hasAnyAuthority("Admin").anyRequest().authenticated().and().formLogin()
-                .loginPage("/login").permitAll().failureUrl("/login-error").and().logout().invalidateHttpSession(true)
-                .clearAuthentication(true).logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/","/login", "/signup", "/images/**", "/css/**", "/js/**").permitAll()
+                .antMatchers("/").hasAnyAuthority("USER", "CREATOR", "EDITOR", "ADMIN")
+                .antMatchers("/new/**").hasAnyAuthority("CREATOR", "ADMIN")
+                .antMatchers("/update/**").hasAnyAuthority("EDITOR", "ADMIN")
+                .antMatchers("/delete/**").hasAnyAuthority("Admin")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login").permitAll()
+                .failureUrl("/login-error")
+                .and()
+                .logout().invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/logout-success").permitAll();
     }
 
+
 }
+
